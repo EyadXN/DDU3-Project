@@ -21,5 +21,22 @@ header p {
 }
 
 main{
-    background-color: #1c1c1c;   
+    background-color: #1c1c1c;  
+    width: 100%; 
+}
+main #container{
+    background-color: black;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+main #container div{
+    display: flex;
+    flex-direction: column;
+}
+main #container div img{
+    width: 100px;
 }
