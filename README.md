@@ -1,3 +1,3 @@
 # DDU3-Project
 Back and front end focused group project
-Color Scheme - Black: , Red: , White: ,
+Color Scheme - Black: , Green:#27FFBE, White: ,

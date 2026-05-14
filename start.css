@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color:#303030;
+    border-bottom: #27FFBE;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+header p{
+    color: #27FFBE;
+    font-size: 30px;
+}
