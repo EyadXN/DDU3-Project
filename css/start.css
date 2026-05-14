@@ -7,7 +7,7 @@ header{
     display: flex;
     width: 100%;
     height: 100px;
-    background-color:#303030;
+    background-color:#1c1c1c;
     border-bottom: #27FFBE;
     justify-content: space-between;
     padding-left: 50px;
@@ -16,4 +16,9 @@ header{
 header p{
     color: #27FFBE;
     font-size: 30px;
+    font-family: monospace;
+}
+
+main{
+    
 }
