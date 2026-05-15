@@ -1,30 +1,71 @@
+*{
+    box-sizing: border-box;
+}
 body {
     margin: 0;
     padding: 0;
+    width: 100%;
 }
 
 header {
     display: flex;
     width: 100%;
-    height: 100px;
+    height: 75px;
     background-color: #1c1c1c;
-    border-bottom: #27FFBE;
-    justify-content: space-between;
+    border-bottom: #780606 solid 1px;
     padding-left: 50px;
     padding-right: 50px;
+    align-items: center;
+    gap: 600px;
 }
-
-header p {
-    color: #27FFBE;
+header nav ul{
+    display: flex;
+    list-style-type: none;
+    gap: 20px;
+    align-items: center;
+}
+header nav ul li, a{
+    text-decoration: none;
+    color: rgb(167, 160, 160);
+}
+header nav ul #special{
+    padding: 5px 7px;
+    background-color: rgb(214, 163, 22);
+    color: black ;
+    border-radius: 5px;
+}
+header div{
+    display: flex;
+    gap: 5px;
+    height: 40px;
+    align-items: center;
+}
+header div p {
+    color: rgb(167, 160, 160);
     font-size: 30px;
-    font-family: monospace;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 5px;
+}
+header div div{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #780606;
 }
 
 main{
+    background-image: url("../img/movieimg/noCountry.jpeg");
+    background-size: cover;
     background-color: #1c1c1c;  
     width: 100%; 
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    
 }
+
 main #container{
+    width: 1200px;
     background-color: black;
     padding: 100px;
     display: flex;
@@ -32,11 +73,49 @@ main #container{
     gap: 100px;
     margin-left: 100px;
     margin-right: 100px;
+    align-items: end;
+    opacity: 0.95;
+    position: relative;
+}
+main #container #text{
+    font-size: 40px;
+    position: absolute;
+    left: 750px;
+    top: 50px;
+    color: rgb(167, 160, 160);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
 }
 main #container div{
     display: flex;
     flex-direction: column;
+    gap: 40px;
 }
 main #container div img{
     width: 100px;
+}
+#num1 div{
+    height: 350px;
+    width: 100px;
+    background-color: #780606;
+}
+#num2 div{
+    height: 275px;
+    width: 100px;
+    background-color: #780606;
+}
+#num3 div{
+    height: 200px;
+    width: 100px;
+    background-color: #780606;
+}
+#num4 div{
+    height: 150px;
+    width: 100px;
+    background-color: #780606;
+}
+#num5 div{
+    height: 110px;
+    width: 100px;
+    background-color: #780606;
 }
