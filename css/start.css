@@ -1,3 +1,17 @@
+@font-face {
+    font-family: "Bungee";
+    src: url(../fonts/Bungee/Bungee-Regular.ttf);
+}
+@font-face {
+    font-family: "Jersey";
+    src: url(../fonts/Jersey_10/Jersey10-Regular.ttf);
+}
+@font-face {
+    font-family: "Macado";
+    src: url(../fonts/Supermercado_One/SupermercadoOne-Regular.ttf);
+}
+
+
 *{
     box-sizing: border-box;
 }
@@ -43,7 +57,7 @@ header div{
 header div p {
     color: rgb(167, 160, 160);
     font-size: 30px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Bungee";
     margin-left: 5px;
 }
 header div div{
@@ -53,6 +67,92 @@ header div div{
     background-color: #780606;
 }
 
+/*picplay börjar här*/
+
+#picPlay{
+    width: 100%;
+    height: 800px;
+    background-color: #1c1c1c;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#picPlay #movie{
+    width: 100%;
+    height: 700px;
+    background-image: url("../img/movieimg/picplay1.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-color: red;
+    position: relative;
+    z-index: 1;
+}
+#picPlay #movie b{
+    font-size: 70px;
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    color: white;
+    opacity: 0.7;
+    font-family: "Macado";
+}
+#picPlay #movie #movieInfo{
+    display: flex;
+    top: 130px;
+    left: 60px;
+}
+#picPlay #movie #movieInfo #rating{
+    color: #780606;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#picPlay #movie #description{
+    width: 600px;
+    position: absolute;
+    top: 250px;
+    left: 60px;
+    color: white;
+    opacity: 0.75;
+    letter-spacing: 1.5;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#picPlay #movie .map{
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 50px;
+    left: 500px;
+    align-items: center;
+}
+#picPlay #movie .map div{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(167, 160, 160);
+    opacity: 0.7;
+}
+#picPlay #movie .map button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    border: 0;
+    background-color: rgb(167, 160, 160);
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+#picPlay #movie .map button:hover{
+    width: 55px;
+    height: 55px;
+    background-color: #780606;
+    opacity: 0.85;
+}
+
+
+
+/*main börjar här*/
 main{
     background-image: url("../img/movieimg/noCountry.jpeg");
     background-size: cover;
