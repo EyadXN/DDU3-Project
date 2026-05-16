@@ -1,42 +1,105 @@
+//* Börja med att skapa en variabel som har värdet av #movie,
+//* sedan s
 let picPlaysimg = [
     {
         name: "Dune",
-        id: "m-001",
+        id: "0",
         category: "Adventure/Drama",
-         release:"2021",
+        release:"2021",
+        rating: "☆5",
         imgUrl: "../img/movieimg/picplay1.jpeg",
-        description:"På ökenplaneten Arrakis tvingas Paul Atreides och hans familj navigera ett farligt politiskt spel kring den värdefulla kryddan melange. När rivaler attackerar deras hus förlorar Paul nästan allt och flyr ut i öknen tillsammans med sin mamma Jessica. Där möter han det mystiska Fremenfolket och börjar förstå sitt möjliga öde som en profetisk ledare. Filmen kombinerar storslagen science fiction med teman om makt, kolonialism, religion och identitet. Denis Villeneuve bygger långsamt upp en massiv värld fylld av imponerande visuella miljöer, mäktiga ljudbilder och intensiv atmosfär som gör berättelsen både episk och personlig samtidigt."
+        description:"Paul Atreides anländer till ökenplaneten Arrakis där kampen om den värdefulla kryddan melange leder till krig, förräderi och profetior. Efter att hans familj attackeras tvingas Paul överleva i öknen och upptäcka sitt möjliga öde som ledare för Fremenfolket."
     },
     {
         name: "Se7en",
-        id: "m-002",
+        id: "1",
         category: "Drama/Thriller",
         release:"1995",
+        rating: "☆5",
         imgUrl: "../img/movieimg/picplay2.jpeg",
-        description: "Två kriminalpoliser, den erfarne Somerset och den impulsive Mills, jagar en seriemördare som använder de sju dödssynderna som inspiration för sina brutala mord. Utredningen leder dem genom en mörk, regnig och hopplös stad där varje brottsplats känns mer grotesk än den förra. Ju närmare de kommer sanningen, desto mer manipulerar mördaren deras känslor och moral. Filmen bygger en intensiv känsla av paranoia och obehag genom sitt dystra foto, långsamma tempo och psykologiska spänning. Slutet har blivit legendariskt för sin chockfaktor och för hur det förändrar hela berättelsens innebörd på några få minuter."
+        description: "Två kriminalpoliser jagar en seriemördare som baserar sina brutala mord på de sju dödssynderna. Utredningen blir allt mörkare och leder till ett chockerande slut som testar deras moral, tålamod och mänsklighet."
     },
     {
         name: "Spider-Man: Into the Spider-Verse",
-        id:"m-003",
+        id:"2",
         category: "Action",
-         release:"2018",
-        imageUrl: "../img/movieimg/picplay3.jpeg",
-        description: "Miles Morales är en vanlig tonåring i Brooklyn tills ett experiment öppnar dörrar mellan olika universum och flera versioner av Spider-Man möts i samma värld. Med hjälp av de andra hjältarna måste Miles lära sig vad ansvar, mod och självförtroende verkligen betyder. Filmen blandar humor, känslor och action med en unik animationsstil som ser ut som levande serietidningar. Varje universum har sin egen visuella identitet, vilket gör filmen energisk och kreativ från början till slut. Berättelsen handlar lika mycket om att hitta sin egen identitet som om att rädda världen från total kollaps och kaos."
+        release:"2018",
+        rating: "☆5",
+        imgUrl: "../img/movieimg/picplay3.jpeg",
+        description: "Tonåringen Miles Morales blir Spider-Man när flera universum kolliderar och olika versioner av hjälten möts. Tillsammans måste de stoppa ett hot som riskerar att förstöra verkligheten samtidigt som Miles lär sig vad det innebär att vara hjälte. "
     },
     {
         name: "Arrival",
-        id: "m-004",
+        id: "3",
         category: "Mysterie",
-         release:"2016",
-        imageUrl: "../img/movieimg/picplay4.jpeg",
-        description: "När mystiska rymdskepp plötsligt dyker upp runt jorden rekryteras språkforskaren Louise Banks för att försöka kommunicera med de främmande besökarna. Medan världens regeringar blir allt mer paranoida försöker hon förstå deras språk och deras verkliga syfte. Ju mer hon lär sig, desto mer förändras hennes uppfattning om tid, minnen och mänskliga relationer. Filmen fokuserar mindre på invasion och action och mer på kommunikation, sorg och hur språk formar våra tankar. Denis Villeneuve skapar en känslosam och intelligent science fiction-upplevelse där varje avslöjande bygger mot ett emotionellt och filosofiskt kraftfullt slut som stannar kvar länge."
+        release:"2016",
+        rating: "☆5",
+        imgUrl: "../img/movieimg/picplay4.jpeg",
+        description: "När mystiska rymdskepp anländer till jorden försöker språkforskaren Louise Banks kommunicera med besökarna. Genom deras språk förändras hennes förståelse av tid, minnen och mänskliga relationer på ett djupt och oväntat sätt."
     },
     {
         name: "Nightcrawler",
-        id: "m-005",
+        id: "4",
         category: "Drama/Thriller",
-         release:"2014",
-        imageUrl: "../img/movieimg/picplay5.jpeg",
-        description: "Lou Bloom är en ensam och ambitiös man som upptäcker världen av nattlig kriminaljournalistik i Los Angeles. Med en kamera och en polisradio börjar han filma olyckor, mord och våldsamma händelser för att sälja materialet till lokala nyhetskanaler. Ju mer framgångsrik han blir, desto längre är han villig att gå för att få de mest chockerande bilderna. Filmen utforskar medieetik, exploatering och besattheten av framgång i ett samhälle där sensation säljer bäst. Jake Gyllenhaals intensiva prestation gör Lou både obehaglig och fascinerande, vilket skapar en thriller fylld av spänning och mörk samhällskritik."
+        release:"2014",
+        rating: "☆5",
+        imgUrl: "../img/movieimg/picplay5.jpeg",
+        description: "Lou Bloom börjar filma olyckor och brott för lokala nyheter i Los Angeles. Driven av ambition och brist på moral blir han allt farligare i jakten på sensationella bilder och framgång."
     }
 ]
+let movie = document.getElementById("movie");
+let currentIndex = 0;
+function renderMovie(thisMovie){
+    movie.innerHTML = `
+    <b>${thisMovie.name}</b>
+    <div id="movieInfo">
+        <div id="rating">${thisMovie.rating}</div>
+        <div id="release">${thisMovie.release}</div>  
+        <div id="category">${thisMovie.category}</div>
+    </div>
+    <div id="description"> ${thisMovie.description}</div>
+
+    <div class="map">
+        <button id="left">❰</button>
+        <div class ="dot"></div>
+        <div class ="dot"></div>
+        <div class ="dot"></div>
+        <div class ="dot"></div>
+        <div class ="dot"></div>
+        <button id="right">❱</button>
+    </div>
+`;
+movie.style.backgroundImage = `url(${thisMovie.imgUrl})`;
+let rightButton = document.getElementById("right");
+let leftButton = document.getElementById("left");
+
+rightButton.addEventListener("click", nextMovie)
+leftButton.addEventListener("click", previousMovie)
+
+let dots = document.querySelectorAll(".dot");
+dots[currentIndex].classList.add("activeDot");
+}
+renderMovie(picPlaysimg[0]);
+
+
+
+function nextMovie(){
+    currentIndex++;
+    if(currentIndex > 4){
+        currentIndex = 0;
+        renderMovie(picPlaysimg[currentIndex]);
+    }
+    else{ 
+        renderMovie(picPlaysimg[currentIndex]);
+    }
+}
+function previousMovie(){
+    currentIndex--;
+    if(currentIndex < 0){
+        currentIndex = 4;
+        renderMovie(picPlaysimg[currentIndex]);
+    }
+    else{
+        renderMovie(picPlaysimg[currentIndex])
+    }
+}

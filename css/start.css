@@ -10,6 +10,10 @@
     font-family: "Macado";
     src: url(../fonts/Supermercado_One/SupermercadoOne-Regular.ttf);
 }
+@font-face {
+    font-family: "Neue";
+    src: url(../fonts/Bebas_Neue/BebasNeue-Regular.ttf);
+}
 
 
 *{
@@ -79,8 +83,7 @@ header div div{
 }
 #picPlay #movie{
     width: 100%;
-    height: 700px;
-    background-image: url("../img/movieimg/picplay1.jpeg");
+    height: 100%;
     background-size: cover;
     background-position: center;
     background-color: red;
@@ -88,39 +91,58 @@ header div div{
     z-index: 1;
 }
 #picPlay #movie b{
-    font-size: 70px;
+    font-size: 90px;
     position: absolute;
     top: 100px;
     left: 60px;
     color: white;
-    opacity: 0.7;
-    font-family: "Macado";
+    opacity: 0.85;
+    font-family: "Neue";
 }
 #picPlay #movie #movieInfo{
     display: flex;
-    top: 130px;
+    position: absolute;
+    top: 210px;
     left: 60px;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
 }
 #picPlay #movie #movieInfo #rating{
     color: #780606;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Neue";
+    font-size: 25px;
+    opacity: 0.9;
+}
+#picPlay #movie #movieInfo #release{
+    color: rgb(228, 226, 226);
+    font-family: "Neue";
+    font-size: 25px;
+    opacity: 0.9;
+}
+#picPlay #movie #movieInfo #category{
+    color: rgb(228, 226, 226);
+    font-family: "Neue";
+    font-size: 25px;
+    opacity: 0.9;
 }
 #picPlay #movie #description{
     width: 600px;
     position: absolute;
-    top: 250px;
+    top: 270px;
     left: 60px;
-    color: white;
-    opacity: 0.75;
+    color: rgb(228, 226, 226);
+    opacity: 0.8;
     letter-spacing: 1.5;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
 }
 #picPlay #movie .map{
     display: flex;
     gap: 10px;
     position: absolute;
     bottom: 50px;
-    left: 500px;
+    left: 550px;
     align-items: center;
 }
 #picPlay #movie .map div{
@@ -128,7 +150,14 @@ header div div{
     height: 20px;
     border-radius: 50%;
     background-color: rgb(167, 160, 160);
-    opacity: 0.7;
+    opacity: 0.8;
+}
+#picPlay #movie .map .activeDot{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #780606;
+    opacity: 0.8;
 }
 #picPlay #movie .map button{
     width: 50px;
@@ -137,7 +166,7 @@ header div div{
     font-size: 20px;
     border: 0;
     background-color: rgb(167, 160, 160);
-    opacity: 0.7;
+    opacity: 0.8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -147,75 +176,84 @@ header div div{
     width: 55px;
     height: 55px;
     background-color: #780606;
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 
 
 /*main börjar här*/
 main{
-    background-image: url("../img/movieimg/noCountry.jpeg");
-    background-size: cover;
     background-color: #1c1c1c;  
     width: 100%; 
     padding-top: 100px;
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;  
 }
 
 main #container{
     width: 1200px;
     background-color: black;
+    border: solid 1px #780606;
     padding: 100px;
     display: flex;
-    justify-content: center;
-    gap: 100px;
+    justify-content: space-between;
+    gap: 30px;
     margin-left: 100px;
     margin-right: 100px;
     align-items: end;
     opacity: 0.95;
     position: relative;
 }
-main #container #text{
+#txtContainer{
+    width: 450px;
+    height: 300px;
+}
+#text{
     font-size: 40px;
     position: absolute;
-    left: 750px;
-    top: 50px;
-    color: rgb(167, 160, 160);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #780606;
+    left: 100px;
+    top: 100px;
+    font-family: "Neue";
 
 }
-main #container div{
+main #container #stats{
+    display: flex;
+    align-items: end;
+    gap: 45px;
+    width: 600px;
+    justify-content: end;
+}
+main #container #stats div{
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
 main #container div img{
-    width: 100px;
+    width: 45px;
 }
 #num1 div{
-    height: 350px;
-    width: 100px;
+    height: 220px;
+    width: 45px;
     background-color: #780606;
 }
 #num2 div{
-    height: 275px;
-    width: 100px;
+    height: 160px;
+    width: 45px;
     background-color: #780606;
 }
 #num3 div{
-    height: 200px;
-    width: 100px;
+    height: 150px;
+    width: 45px;
     background-color: #780606;
 }
 #num4 div{
-    height: 150px;
-    width: 100px;
+    height: 100px;
+    width: 45px;
     background-color: #780606;
 }
 #num5 div{
-    height: 110px;
-    width: 100px;
+    height: 95px;
+    width: 45px;
     background-color: #780606;
 }
