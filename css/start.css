@@ -145,12 +145,13 @@ header div div{
     height: 75px;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.8);
-    width: 25%;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     top: 90%;
     border-radius: 50px;
+    padding: 0 10px;
 }
 #picPlay #movie .map div{
     width: 20px;
