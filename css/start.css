@@ -178,8 +178,29 @@ header div div{
     background-color: #780606;
     opacity: 0.9;
 }
+/* Movie List börjar här*/
 
+#movielist{
+    width: 100%;
+    height: 500px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-color: #1c1c1c;
+}
+#movielist img{
+    width: 150px;
 
+}
+#movielist .movieSub{
+    display: flex;
+    flex-direction: column;
+}
+#movielist .movieSub b{
+    color: #780606;
+    font-family: "Neue";
+    font-size: 15px;
+    opacity: 0.9;
+}
 
 /*main börjar här*/
 main{
@@ -217,12 +238,23 @@ main #container{
     font-family: "Neue";
 
 }
+main #container #txtContainer p{
+    font-size: 15px;
+    color: #780606;
+    width: 400px;
+    left: 100px;
+    top: 150px;
+    font-family: "Neue";
+    position: absolute;
+}
 main #container #stats{
     display: flex;
     align-items: end;
     gap: 45px;
     width: 600px;
-    justify-content: end;
+    justify-content: center;
+    border-bottom: solid 1px #780606;
+    border-left: solid 1px #780606;
 }
 main #container #stats div{
     display: flex;

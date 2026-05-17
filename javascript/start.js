@@ -1,5 +1,6 @@
-//* Börja med att skapa en variabel som har värdet av #movie,
-//* sedan s
+
+
+
 let picPlaysimg = [
     {
         name: "Dune",
@@ -81,8 +82,6 @@ dots[currentIndex].classList.add("activeDot");
 }
 renderMovie(picPlaysimg[0]);
 
-
-
 function nextMovie(){
     currentIndex++;
     if(currentIndex > 4){
@@ -103,3 +102,39 @@ function previousMovie(){
         renderMovie(picPlaysimg[currentIndex])
     }
 }
+async function getMovies() {
+  try {
+    const response = await fetch("./database.json"); 
+    const movies = await response.json();
+    return movies;
+  } catch (error) {
+    console.error("Kunde inte läsa filen", error);
+    return [];
+  }
+}
+
+async function createMovieList(){
+    let movieList = document.getElementById("movielist");
+    let moviesArray = await getMovies();
+    if(!moviesArray || moviesArray === 0){
+        return
+    }
+    for(let i = 0; i < 7; i++){
+        let ramNum = Math.floor(Math.random() * moviesArray.length);
+        let currentMovie = moviesArray[ramNum];
+        movieList.innerHTML += `
+            <div class ="movieSub">
+            <img src="${currentMovie.Poster}" alt="#">
+            <p>${currentMovie.Title}</p>
+            <div>
+                <b>☆5</b>
+                <p>${currentMovie.Year}</p>
+                <p>Category</p>
+            </div>
+            </div>
+        `;
+    }
+}
+createMovieList();
+
+
