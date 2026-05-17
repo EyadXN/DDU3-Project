@@ -29,7 +29,7 @@ header {
     display: flex;
     width: 100%;
     height: 75px;
-    background-color: #1c1c1c;
+    background-color: black;
     border-bottom: #780606 solid 1px;
     padding-left: 50px;
     padding-right: 50px;
@@ -190,20 +190,55 @@ header div div{
 
 #movielist{
     width: 100%;
-    height: 500px;
     padding-top: 100px;
     padding-bottom: 100px;
-    background-color: #1c1c1c;
-}
-#movielist img{
-    width: 150px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    padding-top: 200px;
 
 }
+
+#movielist #horrorTxt{
+    position: absolute;
+    font-size: 30px;
+    padding-left: 20px;
+    border-left: #780606 solid 3px;
+    left: 35px;
+    top: 150px;
+    color: white;
+}
+
 #movielist .movieSub{
     display: flex;
     flex-direction: column;
+    width: 220px;
+    align-items: center;
+    justify-content: center;
 }
-#movielist .movieSub b{
+
+#movielist .movieSub img{
+    width: 100%;
+}
+#movielist .movieSub .subSub{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#movielist .movieSub p{
+    font-size: 14px;
+    color: white;
+    opacity: 0.8;
+}
+#movielist .movieSub .subSub p{
+    font-size: 15px;
+    color: rgb(167, 160, 160);
+}
+#movielist .movieSub .subSub b{
     color: #780606;
     font-family: "Neue";
     font-size: 15px;
@@ -212,7 +247,7 @@ header div div{
 
 /*main börjar här*/
 main{
-    background-color: #1c1c1c;  
+    background-color: black;  
     width: 100%; 
     padding-top: 100px;
     display: flex;

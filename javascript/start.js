@@ -102,38 +102,89 @@ function previousMovie(){
         renderMovie(picPlaysimg[currentIndex])
     }
 }
-async function getMovies() {
-  try {
-    const response = await fetch("./database.json"); 
-    const movies = await response.json();
-    return movies;
-  } catch (error) {
-    console.error("Kunde inte läsa filen", error);
-    return [];
-  }
-}
 
-async function createMovieList(){
+let tinyHorrorDatabase = [
+     {
+    "Title": "Wake Up Dead Man",
+    "Year": "2025",
+    "imdbID": "tt14364480",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BY2Q0OTA5MTEtNWU4NC00ZWFmLTg5NmYtNDFmODViYWUxZmJkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+  {
+    "Title": "American Horror Story",
+    "Year": "2011–",
+    "imdbID": "tt1844624",
+    "Type": "series",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BNzJjZTg0ZmMtMTg0Ny00NzYxLWFjMWMtMWFiYmNkMTNjZGMyXkEyXkFqcGc@._V1_SX300.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+  {
+    "Title": "The Rocky Horror Picture Show",
+    "Year": "1975",
+    "imdbID": "tt0073629",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BOTg2YzY5ZGYtNDk1My00N2Q2LWFhN2YtZWU5YTkzODIyZGRmXkEyXkFqcGc@._V1_SX300.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+  {
+    "Title": "The Amityville Horror",
+    "Year": "2005",
+    "imdbID": "tt0384806",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BMzc1Njc2NDc3NV5BMl5BanBnXkFtZTYwODYyNzI3._V1_SX300.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+  {
+    "Title": "Nosferatu: A Symphony of Horror",
+    "Year": "1922",
+    "imdbID": "tt0013442",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BNDg1OTI1M2MtMTVlMS00ZjFhLTgyMTAtYjIzOWUwZTkyZWE5XkEyXkFqcGc@._V1_SX300.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+  {
+    "Title": "The Amityville Horror",
+    "Year": "1979",
+    "imdbID": "tt0078767",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BNWRmOTdhMWEtYmExOC00Y2E5LTkwYjEtYTAwY2Q0MTU0MTBlXkEyXkFqcGc@._V1_SX300.jpg",
+    "category": "Drama",
+    "description": "Ingen beskrivning tillgänglig ännu.",
+    "rating": "5"
+  },
+]
+
+function createMovieList(){
     let movieList = document.getElementById("movielist");
-    let moviesArray = await getMovies();
-    if(!moviesArray || moviesArray.length === 0){
-        return;
-    }
-    for(let i = 0; i < 7; i++){
-        let ramNum = Math.floor(Math.random() * moviesArray.length);
-        let currentMovie = moviesArray[ramNum];
-        movieList.innerHTML += `
-            <div class ="movieSub">
-            <img src="${currentMovie.Poster}" alt="#">
-            <p>${currentMovie.Title}</p>
-            <div>
+    let horrorList = tinyHorrorDatabase;
+
+
+   for(let horror of horrorList){
+    movieList.innerHTML += `
+        <div class="movieSub">
+            <img src="${horror.Poster}" alt="#">
+            <p>${horror.Title}</p>
+            <div class="subSub">
                 <b>☆5</b>
-                <p>${currentMovie.Year}</p>
-                <p>Category</p>
+                <p>${horror.Year}</p>
+                <p>Horror</p>
             </div>
-            </div>
-        `;
-    }
+        </div>
+    `;
+   }
+
 }
 createMovieList();
 
