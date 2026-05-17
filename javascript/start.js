@@ -116,8 +116,8 @@ async function getMovies() {
 async function createMovieList(){
     let movieList = document.getElementById("movielist");
     let moviesArray = await getMovies();
-    if(!moviesArray || moviesArray === 0){
-        return
+    if(!moviesArray || moviesArray.length === 0){
+        return;
     }
     for(let i = 0; i < 7; i++){
         let ramNum = Math.floor(Math.random() * moviesArray.length);
