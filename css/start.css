@@ -53,6 +53,9 @@ header nav ul #special{
     color: black ;
     border-radius: 5px;
 }
+header nav ul #special a{
+    color: black;
+}
 header div{
     display: flex;
     gap: 5px;
