@@ -55,7 +55,7 @@ a {
   color: rgb(167, 160, 160);
 }
 
-header nav ul #special {
+header nav ul #special a {
   padding: 5px 7px;
   background-color: rgb(214, 163, 22);
   color: black;
