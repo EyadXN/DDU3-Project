@@ -1,55 +1,101 @@
-// Requests som behöver göras
 // Deno text: deno run --allow-net --allow-read --watch backendRelated/backend.js.
-async function handler(request){
-    
-    let dataBase = readTextFileSync("database.json");
+import { mov } from "endMovies.js"
+import { use } from "endUsers.js"
+import { serveFile } from "jsr:@std/http/file-server"
+
+
+async function handler(request) {
+
+    let dataBase = readTextFileSync("../database.json");
     let url = new URL(request.url);
     dataBase = JSON.parse(dataBase);
+    let users = dataBase.users;
+    let movies = dataBase.movies;
     const options = {
         headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
         }
     }
     let moviesUrl = "http://localhost:8000/movies";
 
-    if (url.pathname.startsWith(moviesUrl)){
-        if (request.method == "GET"){
-            if (request.headers.get("Accept") == "application/json"){
-                if(url.pathname == moviesUrl){
-                    if(!url.search){
-                        return new Response(JSON.stringify(dataBase), options);
+    let usersUrl = "http://localhost:8000/users";
+
+
+    if (url.pathname.startsWith(moviesUrl)) {
+        if (request.method == "GET") {
+            if (request.headers.get("Accept") == "application/json") {
+                if (url.pathname == moviesUrl) {
+                    if (!url.search) {
+                        return new Response(JSON.stringify(movies), options);
                     }
                     let year = url.searchParams.get("year");
-                    let category = url.searchParams.get("cateogry"); 
+                    let category = url.searchParams.get("cateogry");
                     let rating = url.searchParams.get("rating");
                     console.log("du är inne")
 
-                    let filtered = pro.filterSearch(dataBase, year, category, rating);
+                    let filtered = pro.filterSearch(movies, year, category, rating);
                     console.log("filtered", filtered)
                     return new Response(JSON.stringify(filtered), options);
                 }
-              let route = new URLPattern({pathname: `${moviesUrl}/:id`});
-              if(route.test(request.url)){
-                let match = route.exec(request.url);
-                let movie = mov.getMovie(match.pathname.groups.id, dataBase);
+                let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
+                if (route.test(request.url)) {
+                    let match = route.exec(request.url);
+                    let movie = mov.getMovie(match.pathname.groups.id, movies);
 
-                if(movie == null){
-                    return new Response(JSON.stringify("Not Found"), { status: 404 })
+                    if (movie == null) {
+                        return new Response(JSON.stringify("Not Found"), { status: 404 })
+                    }
+                    return new Response(JSON.stringify(movie), options);
                 }
-                return new Response(JSON.stringify(movie), options);
-              }
             }
             else {
                 return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
             }
         }
-        if(request.method == "POST"){
-            if (request.headers.get("Content-Type") == "application/json"){
+        if (request.method == "POST") {
+            if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
             }
         }
     }
+    if (url.pathname.startsWith(usersUrl)) {
+        if (request.method == "GET") {
+            if (request.headers.get("Accept") == "application/json") {
+
+                let route = new URLPattern({ pathname: `${usersUrl}/:id` });
+
+                if (route.test(request.url)) {
+
+                    let match = route.exec(request.url);
+                    let user = use.findUser(match.pathname.groups.id, users)
+                    if (user == null) {
+                        return new Response(JSON.stringify("Not Found"), { status: 404 })
+                    }
+                    return new Response(JSON.stringify(user), options)
+                }
+            }
+
+        }
+        if (request.method == "POST") {
+            let req = await request.json();
+            if(mov.createUserControl(req)){
+                
+            }
+        }
+    }
 }
+/*function createNewDataBase(){
+    let movies =  Deno.readTextFileSync("../database.json");
+    movies = JSON.parse(movies);
+    let users = []
+
+    let dataBase = {
+        movieList: movies,
+        userList: users
+    };
+    Deno.writeTextFileSync("../database.json", JSON.stringify(dataBase, null, 2));
+}
+createNewDataBase();*/
 
 Deno.serve(handler);
