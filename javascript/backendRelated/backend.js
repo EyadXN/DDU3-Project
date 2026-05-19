@@ -1,5 +1,5 @@
 // Requests som behöver göras
-// 
+// Deno text: deno run --allow-net --allow-read --watch backendRelated/backend.js.
 async function handler(request){
     
     let dataBase = readTextFileSync("database.json");
@@ -23,14 +23,30 @@ async function handler(request){
                     let year = url.searchParams.get("year");
                     let category = url.searchParams.get("cateogry"); 
                     let rating = url.searchParams.get("rating");
-                    let inStock = url.searchParams.get("inStock");
                     console.log("du är inne")
 
-                    let filtered = pro.filterSearch(products, category, minPrice, maxPrice, inStock);
+                    let filtered = pro.filterSearch(dataBase, year, category, rating);
                     console.log("filtered", filtered)
                     return new Response(JSON.stringify(filtered), options);
-          
                 }
+              let route = new URLPattern({pathname: `${moviesUrl}/:id`});
+              if(route.test(request.url)){
+                let match = route.exec(request.url);
+                let movie = mov.getMovie(match.pathname.groups.id, dataBase);
+
+                if(movie == null){
+                    return new Response(JSON.stringify("Not Found"), { status: 404 })
+                }
+                return new Response(JSON.stringify(movie), options);
+              }
+            }
+            else {
+                return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
+            }
+        }
+        if(request.method == "POST"){
+            if (request.headers.get("Content-Type") == "application/json"){
+                let req = await request.json();
             }
         }
     }
