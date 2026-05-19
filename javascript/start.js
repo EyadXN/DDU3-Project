@@ -1,6 +1,4 @@
 
-
-
 let picPlaysimg = [
     {
         name: "Dune",
