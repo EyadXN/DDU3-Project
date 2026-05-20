@@ -15,8 +15,9 @@ class API{
     let movies = await request.json;
     return movies;
   }
-
-  async postRating(){}
+  async postUser(){
+    
+  }
 
 
 }
