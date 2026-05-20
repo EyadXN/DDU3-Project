@@ -1,7 +1,7 @@
-// Deno text: deno run --allow-net --allow-read --watch backend.js.
-/*import { mov } from "./endMovies.js"
+// Deno text: deno run --allow-net --allow-read --allow-write --watch backend.js
+import { mov } from "./endMovies.js"
 import { use } from "./endUsers.js"
-import { serveFile } from "jsr:@std/http/file-server"*/
+import { serveFile } from "jsr:@std/http/file-server"
 
 
 async function handler(request) {
@@ -66,7 +66,7 @@ async function handler(request) {
             let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-                let filteredMovies = pro.deleteProduct(match.pathname.groups.id, movies);
+                let filteredMovies = mov.deleteRating(match.pathname.groups.id, movies, users);
 
                 if (moviesLength === filteredMovies.length) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })
@@ -101,12 +101,29 @@ async function handler(request) {
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
-                if (mov.createUserControl(req)) {
-                    let newUsers = mov.postUser(req);
+                if (use.createUserControl(req)) {
+                    let newUsers = use.postUser(req);
                     return new Response(JSON.stringify(newUsers), options)
                 }
             }
         }
+        if (request.method == "DELETE") {
+            let usersLength = users.length;
+            let route = new URLPattern({ pathname: `${usersUrl}/:id` });
+            if (route.test(request.url)) {
+                let match = route.exec(request.url);
+                let filteredUsers = use.deleteUser(match.pathname.groups.id, users);
+
+                if (usersLength === filteredUsers.length) {
+                    return new Response(JSON.stringify("Not Found"), { status: 404 })
+                }
+                else {
+                    options.status = 204;
+                    return new Response(null, options)
+                }
+            }
+        }
+
     }
 }
 /*function createNewDataBase(){

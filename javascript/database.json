@@ -1001,5 +1001,18 @@
       "rating": "5"
     }
   ],
-  "userList": []
+  "userList": [
+    {
+      "name": "Abasin",
+      "password": "FrozenDachri",
+      "reviews": [
+        {
+          "title": "The Batman",
+          "id": "001",
+          "rating": "8",
+          "recension": "Too much fanservice, not enough action"
+        }
+      ]
+    }
+  ]
 }
