@@ -30,7 +30,7 @@ async function handler(request) {
                         return new Response(JSON.stringify(movies), options);
                     }
                     let year = url.searchParams.get("year");
-                    let category = url.searchParams.get("cateogry");
+                    let category = url.searchParams.get("category");
                     let rating = url.searchParams.get("rating");
                     console.log("du är inne")
 
