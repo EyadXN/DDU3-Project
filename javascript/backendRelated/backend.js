@@ -9,8 +9,8 @@ async function handler(request) {
     let dataBase = readTextFileSync("../database.json");
     let url = new URL(request.url);
     dataBase = JSON.parse(dataBase);
-    let users = dataBase.users;
-    let movies = dataBase.movies;
+    let users = dataBase.userList;
+    let movies = dataBase.movieList;
     const options = {
         headers: {
             "Content-Type": "application/json",
@@ -56,6 +56,8 @@ async function handler(request) {
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
+                //* vet inte om post user rating ska vara här eller i usersUrl
+
             }
         }
         else {

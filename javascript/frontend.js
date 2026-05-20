@@ -16,5 +16,7 @@ class API{
     return movies;
   }
 
+  async postRating(){}
+
 
 }
