@@ -1,7 +1,7 @@
-// Deno text: deno run --allow-net --allow-read --watch backendRelated/backend.js.
-import { mov } from "endMovies.js"
-import { use } from "endUsers.js"
-import { serveFile } from "jsr:@std/http/file-server"
+// Deno text: deno run --allow-net --allow-read --watch backend.js.
+/*import { mov } from "./endMovies.js"
+import { use } from "./endUsers.js"
+import { serveFile } from "jsr:@std/http/file-server"*/
 
 
 async function handler(request) {
@@ -58,6 +58,25 @@ async function handler(request) {
                 let req = await request.json();
             }
         }
+        else {
+            return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
+        }
+        if (request.method == "DELETE") {
+            let moviesLength = movies.length;
+            let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
+            if (route.test(request.url)) {
+                let match = route.exec(request.url);
+                let filteredMovies = pro.deleteProduct(match.pathname.groups.id, movies);
+
+                if (moviesLength === filteredMovies.length) {
+                    return new Response(JSON.stringify("Not Found"), { status: 404 })
+                }
+                else {
+                    options.status = 204;
+                    return new Response(null, options)
+                }
+            }
+        }
     }
     if (url.pathname.startsWith(usersUrl)) {
         if (request.method == "GET") {
@@ -75,25 +94,36 @@ async function handler(request) {
                     return new Response(JSON.stringify(user), options)
                 }
             }
-
+            else {
+                return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
+            }
         }
         if (request.method == "POST") {
-            let req = await request.json();
-            if(mov.createUserControl(req)){
-                
+            if (request.headers.get("Content-Type") == "application/json") {
+                let req = await request.json();
+                if (mov.createUserControl(req)) {
+                    let newUsers = mov.postUser(req);
+                    return new Response(JSON.stringify(newUsers), options)
+                }
             }
         }
     }
 }
 /*function createNewDataBase(){
-    let movies =  Deno.readTextFileSync("../database.json");
-    movies = JSON.parse(movies);
-    let users = []
-
+    let formerDataBase =  Deno.readTextFileSync("../database.json");
+    let movies = formerDataBase.movieList;
+    let movieList = [];
+    for(let movie of movies){
+        movie.rating = {
+            avgRating: 5,
+            allRatings: []
+        };
+        movieList.push(movie);
+    }
     let dataBase = {
-        movieList: movies,
-        userList: users
-    };
+        movieList: movieList,
+        userList: []
+    }
     Deno.writeTextFileSync("../database.json", JSON.stringify(dataBase, null, 2));
 }
 createNewDataBase();*/
