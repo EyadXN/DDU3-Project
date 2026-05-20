@@ -15,7 +15,17 @@ signUpButton.addEventListener("click", async () => {
 
     try {
 
-        let response = await api.postUser(newUser);
+        let response = await fetch("http://localhost:8000/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            "Accept": "application/json"
+            },
+        body: JSON.stringify(newUser)
+    });
+
+const data = await response.json();
+console.log("User created:", data);
 
     }
     catch (error) {
