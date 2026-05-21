@@ -5,9 +5,10 @@ class Movies {
 
       console.log("All movies", movies);
       return movies;
-    } catch (err) {
-      throw new Error("Failed to load movies:", err);
-      return [];
+
+    } catch (error) {
+      console.error("Det faktiska felet i frontend:", error); // <-- Lägg till denna för att se krocken i konsolen!
+      throw new Error(`Network error Abasin: ${error.message}`);
     }
   }
 

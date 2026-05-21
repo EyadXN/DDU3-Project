@@ -12,7 +12,7 @@ class Movies {
     getRatings(movies, users){
         for(let movie of movies){
             for(let user of users){
-                if(movie.imdbId == user.id){
+                if(movie.imdbID == user.id){
                     movie.rating = user.reviews.rating;
                 }
             }
