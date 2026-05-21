@@ -19,11 +19,11 @@ class Movies {
     console.log(movies)
     let disMovie = [];
     while (disMovie.length < 30 && disMovie.length < movies.length) {
-      let ramNum = Math.floor(Math.random() * 30);
+      let ramNum = Math.floor(Math.random() * movies.length);
       let movie = movies[ramNum];
       if (!disMovie.includes(movie)) {
         let movieBox = document.createElement("div");
-        movieBox.innerHTML = `<div class="movieBox"><img src="${movie.Poster}"></div>`
+        movieBox.innerHTML = `<a href="movie.html" class="movieBox"><img src="${movie.Poster}"></a>`
         movieContainer.appendChild(movieBox);
         disMovie.push(movie);
       }
