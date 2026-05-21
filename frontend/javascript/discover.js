@@ -5,9 +5,6 @@ class Movies {
       let movies = await api.getMovies()
       console.log("asdfs", movies)
 
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
 
       console.log(movieData);
     } catch (err) {

@@ -1,16 +1,39 @@
 class API{
 
   async getMovies(){
+    let request;
+    let movies;
     try{
-      let request = await fetch("/movies");
+      request = await fetch("/movies", {
+                headers: {"Accept": "application/json"}});
       if(!request.ok){
-        throw new Error("movies response är inte ok!")
+        throw new Error("movies response är inte ok! Vincent")
       }
+      movies = await request.json();
+      console.log("movies:",movies)
     }catch(error){
-      throw new Error(error + "network error")
+      throw new Error(error + "network error Abasin")
     }
-    let movies = await request.json;
+     
     return movies;
+  }
+  async getMovie(id){
+        let response;
+        try{
+            response = await fetch("/movies" + id, {
+                headers: {"Accept": "application/json"}
+            });
+            if(!response.ok){
+                throw new Error("Kunde inte hämta filmen pågrund av Responsen")
+            }
+            let movie = await response.json();
+            return product;
+
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+        
   }
   async postUser(newUser){
       try {
