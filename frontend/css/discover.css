@@ -87,4 +87,6 @@ header div div {
   max-width: 1300px;
 }
 
-.movieBox {}
+.movieBox{
+  color: black;
+}

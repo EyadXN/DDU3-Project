@@ -20,8 +20,16 @@ class Movies {
         return movies;
     }
 
-    deleteRating(id, movies, users){
-
+    deleteRating(id){
+        let data = Deno.readTextFileSync("database.json");
+        data = JSON.parse(data);
+        for(let user of data.userList){
+           for(let rev of user.reviews){
+                if(rev.id == id){
+                    user.reviews.remove(rev);
+                }
+           }
+        }
     }
 
 }

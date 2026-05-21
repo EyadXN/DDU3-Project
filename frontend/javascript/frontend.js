@@ -1,11 +1,8 @@
 class API{
-  constructor(){
-    this.baseURL = "http://localhost:8000.";
-  }
 
   async getMovies(){
     try{
-      let request = await fetch(`${this.baseURL}/movies`);
+      let request = await fetch("/movies");
       if(!request.ok){
         throw new Error("movies response är inte ok!")
       }

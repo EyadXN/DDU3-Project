@@ -74,7 +74,7 @@ async function handler(request) {
             let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-                let filteredMovies = mov.deleteRating(match.pathname.groups.id, movies, users);
+                let filteredMovies = mov.deleteRating(match.pathname.groups.id);
 
                 if (moviesLength === filteredMovies.length) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })
@@ -117,7 +117,7 @@ async function handler(request) {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
                 if (use.createUserControl(req)) {
-                    let newUsers = use.postUser(req, users);
+                    let newUsers = use.postUser(req);
                     return new Response(JSON.stringify(newUsers), options)
                 }else {
                     return new Response(JSON.stringify("Bad Request: Felaktig data"), { status: 400, headers: options.headers });
