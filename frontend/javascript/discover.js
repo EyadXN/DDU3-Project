@@ -1,10 +1,9 @@
 class Movies {
-  async getMovies() {
+  async getAllMovies() {
     let movieData;
     try {
-      const response = await fetch("../javascript/database.json");
-      movieData = await response.json();
-
+      let movies = await api.getMovies()
+      console.log("asdfs", movies)
 
       if (!response.ok) {
         throw new Error(response.status);
@@ -12,16 +11,16 @@ class Movies {
 
       console.log(movieData);
     } catch (err) {
-      console.log("Failed to load movies:", err);
+      throw new Error("Failed to load movies:", err);
     }
-    return movieData;
+    return movies;
   }
 
   async displayMovies() {
     let movieContainer = document.getElementById("movie-container");
 
-    let movies = await this.getMovies();
-
+    let movies = await this.getAllMovies();
+    console.log(movies)
     let disMovie = [];
     for (let i = 0; i < 30; i++) {
       let movieBox = document.createElement("div");
