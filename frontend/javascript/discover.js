@@ -23,7 +23,13 @@ class Movies {
       let movie = movies[ramNum];
       if (!disMovie.includes(movie)) {
         let movieBox = document.createElement("div");
-        movieBox.innerHTML = `<a href="movie.html" class="movieBox"><img src="${movie.Poster}"></a>`
+        movieBox.innerHTML = `<a href="movie.html" class="movieBox">
+        <img src="${movie.Poster}">
+        <p>${movie.Title}</p>
+        <p>${movie.category}</p>
+        <p>${movie.Title}</p>
+        <p>${movie.rating}</p>
+        </a>`
         movieContainer.appendChild(movieBox);
         disMovie.push(movie);
       }
