@@ -8,29 +8,21 @@ signUpButton.addEventListener("click", async () => {
     const password = document.getElementById("passwordInput").value;
 
     const newUser = {
-        username: username,
+        name: username,
         password: password,
         reviews: []
     };
 
     try {
 
-        let response = await fetch("http://localhost:8000/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            "Accept": "application/json"
-            },
-        body: JSON.stringify(newUser)
-    });
+        const data = await api.postUser(newUser);
 
-const data = await response.json();
-console.log("User created:", data);
+        console.log("User created:", data);
 
     }
     catch (error) {
 
-        console.log("Error:", error);
+        console.log("Error:", error);   
 
     }
 
@@ -47,7 +39,7 @@ loginButton.addEventListener("click", async () => {
     try {
 
         const response = await fetch(
-            "http://localhost:8000/users",
+            "/users",
             {
                 method: "GET",
 

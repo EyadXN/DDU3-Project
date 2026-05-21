@@ -18,7 +18,7 @@ class API{
   async postUser(newUser){
       try {
 
-        const response = await fetch("http://localhost:8000/users", {
+        const response = await fetch("/users", {
 
             method: "POST",
 
@@ -33,7 +33,7 @@ class API{
         }
 
         const data = await response.json();
-
+        return data;
         console.log("User created:", data);
 
     }

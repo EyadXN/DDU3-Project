@@ -1,28 +1,34 @@
 // Deno text: deno run --allow-net --allow-read --allow-write --watch backend.js
 import { mov } from "./endMovies.js"
 import { use } from "./endUsers.js"
-import { serveFile } from "jsr:@std/http/file-server"
+import { serveDir } from "jsr:@std/http/file-server"
 
 
 async function handler(request) {
-
-    let dataBase = readTextFileSync("../database.json");
     let url = new URL(request.url);
-    dataBase = JSON.parse(dataBase);
-    let users = dataBase.userList;
-    let movies = dataBase.movieList;
     const options = {
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
         }
     }
-    let moviesUrl = "http://localhost:8000/movies";
 
-    let usersUrl = "http://localhost:8000/users";
+    let moviesUrl = "/movies";
 
+    let usersUrl = "/users";
 
+    
     if (url.pathname.startsWith(moviesUrl)) {
+
+         let dataBase = Deno.readTextFileSync("database.json");
+        
+        dataBase = JSON.parse(dataBase);
+        let users = dataBase.userList;
+        let orginMovies = dataBase.movieList;
+        let movies = mov.getRatings(orginMovies, users);
+
+
+
+
         if (request.method == "GET") {
             if (request.headers.get("Accept") == "application/json") {
                 if (url.pathname == moviesUrl) {
@@ -81,6 +87,13 @@ async function handler(request) {
         }
     }
     if (url.pathname.startsWith(usersUrl)) {
+
+        let dataBase = Deno.readTextFileSync("database.json");
+        let url = new URL(request.url);
+        dataBase = JSON.parse(dataBase);
+        let users = dataBase.userList;
+
+
         if (request.method == "GET") {
             if (request.headers.get("Accept") == "application/json") {
 
@@ -104,8 +117,10 @@ async function handler(request) {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
                 if (use.createUserControl(req)) {
-                    let newUsers = use.postUser(req);
+                    let newUsers = use.postUser(req, users);
                     return new Response(JSON.stringify(newUsers), options)
+                }else {
+                    return new Response(JSON.stringify("Bad Request: Felaktig data"), { status: 400, headers: options.headers });
                 }
             }
         }
@@ -127,24 +142,12 @@ async function handler(request) {
         }
 
     }
+
+    return serveDir(request, {
+        fsRoot: "frontend"
+    });
 }
-/*function createNewDataBase(){
-    let formerDataBase =  Deno.readTextFileSync("../database.json");
-    let movies = formerDataBase.movieList;
-    let movieList = [];
-    for(let movie of movies){
-        movie.rating = {
-            avgRating: 5,
-            allRatings: []
-        };
-        movieList.push(movie);
-    }
-    let dataBase = {
-        movieList: movieList,
-        userList: []
-    }
-    Deno.writeTextFileSync("../database.json", JSON.stringify(dataBase, null, 2));
-}
+/*
 createNewDataBase();*/
 
 Deno.serve(handler);
