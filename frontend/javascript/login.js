@@ -10,6 +10,7 @@ signUpButton.addEventListener("click", async () => {
     const newUser = {
         name: username,
         password: password,
+        id: 0,
         reviews: []
     };
 

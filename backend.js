@@ -69,22 +69,6 @@ async function handler(request) {
         else {
             return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
         }
-        if (request.method == "DELETE") {
-            let moviesLength = movies.length;
-            let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
-            if (route.test(request.url)) {
-                let match = route.exec(request.url);
-                let filteredMovies = mov.deleteRating(match.pathname.groups.id);
-
-                if (moviesLength === filteredMovies.length) {
-                    return new Response(JSON.stringify("Not Found"), { status: 404 })
-                }
-                else {
-                    options.status = 204;
-                    return new Response(null, options)
-                }
-            }
-        }
     }
     if (url.pathname.startsWith(usersUrl)) {
 
@@ -116,7 +100,7 @@ async function handler(request) {
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
-                if (use.createUserControl(req)) {
+                if (use.userControl(req)) {
                     let newUsers = use.postUser(req);
                     return new Response(JSON.stringify(newUsers), options)
                 }else {
@@ -124,14 +108,14 @@ async function handler(request) {
                 }
             }
         }
-        if (request.method == "DELETE") {
-            let usersLength = users.length;
+       if (request.method == "DELETE") {
+            let moviesLength = movies.length;
             let route = new URLPattern({ pathname: `${usersUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-                let filteredUsers = use.deleteUser(match.pathname.groups.id, users);
+                let filteredMovies = mov.deleteRating(match.pathname.groups.id);
 
-                if (usersLength === filteredUsers.length) {
+                if (moviesLength === filteredMovies.length) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })
                 }
                 else {
@@ -140,7 +124,6 @@ async function handler(request) {
                 }
             }
         }
-
     }
 
     return serveDir(request, {
