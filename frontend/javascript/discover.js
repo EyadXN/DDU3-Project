@@ -2,8 +2,15 @@ class Movies {
   async getAllMovies() {
     try {
       let movies = await api.getMovies()
+
       console.log("All movies", movies);
       return movies;
+
+      console.log("asdfs", movies)
+
+
+      console.log(movieData);
+
     } catch (err) {
       throw new Error("Failed to load movies:", err);
       return [];
