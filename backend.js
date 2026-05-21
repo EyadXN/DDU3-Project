@@ -19,7 +19,7 @@ async function handler(request) {
     
     if (url.pathname.startsWith(moviesUrl)) {
 
-         let dataBase = Deno.readTextFileSync("database.json");
+        let dataBase = Deno.readTextFileSync("database.json");
         
         dataBase = JSON.parse(dataBase);
         let users = dataBase.userList;
