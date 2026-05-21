@@ -15,6 +15,9 @@ class Movies {
                 if(movie.imdbID == user.id){
                     movie.rating = user.reviews.rating;
                 }
+                else{
+                    movie.rating = 5;
+                }
             }
         }
         return movies;
