@@ -24,7 +24,7 @@ async function handler(request) {
         dataBase = JSON.parse(dataBase);
         let users = dataBase.userList;
         let orginMovies = dataBase.movieList;
-        let movies = mov.getRatings(orginMovies, users);
+        let movies = mov.getStartRatings(orginMovies, users);
 
 
 
@@ -63,12 +63,18 @@ async function handler(request) {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
                 //* vet inte om post user rating ska vara här eller i usersUrl
-
+                if(mov.reviewControl(req)){
+                    let rating = mov.postReview(req);
+                }
+                else {
+                    return new Response(JSON.stringify("Bad Request"), { status: 400 })
+                }
             }
+            else {
+                return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
+            }   
         }
-        else {
-            return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
-        }
+        
     }
     if (url.pathname.startsWith(usersUrl)) {
 
@@ -113,7 +119,7 @@ async function handler(request) {
             let route = new URLPattern({ pathname: `${usersUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-                let filteredMovies = mov.deleteRating(match.pathname.groups.id);
+                let filteredMovies = mov.deleteReview(match.pathname.groups.id);
 
                 if (moviesLength === filteredMovies.length) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })

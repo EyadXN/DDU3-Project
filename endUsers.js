@@ -17,7 +17,7 @@ class Users {
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
         let newUser = data.userList;
-        newUser.id = newUser.length;
+        req.id = newUser.length;
         newUser.push(req)
         Deno.writeTextFileSync("./database.json", JSON.stringify(data,null, 2));
         return  newUser;

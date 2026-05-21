@@ -9,7 +9,7 @@ class Movies {
         }
     }
     
-    getRatings(movies, users){
+    getStartRatings(movies, users){
         for(let movie of movies){
             for(let user of users){
                 if(movie.imdbID == user.id){
@@ -23,7 +23,7 @@ class Movies {
         return movies;
     }
 
-    deleteRating(id){
+    deleteReview(id){
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
         for(let user of data.userList){
@@ -32,6 +32,23 @@ class Movies {
                     user.reviews.remove(rev);
                 }
            }
+        }
+    }
+
+    reviewControl(req){
+        if(req.rating){
+            return true;
+        }
+        else{ return false}
+    }
+    postReview(req){
+        let data = Deno.readTextFileSync("database.json");
+        data = JSON.parse(data);
+        let users = data.userList;
+        for(let user of users){
+            if(req.id == user.id){
+                
+            }
         }
     }
 
