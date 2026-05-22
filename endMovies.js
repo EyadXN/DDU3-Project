@@ -10,17 +10,32 @@ class Movies {
     }
     
     getStartRatings(movies, users){
-        for(let movie of movies){
-            for(let user of users){
-                if(movie.imdbID == user.id){
-                    movie.rating = user.reviews.rating;
-                }
-                else{
-                    movie.rating = 5;
+        for (let movie of movies) {
+        let totalRating = 0;
+        let count = 0;
+
+        for (let user of users) {
+            
+            
+            for (let rev of user.reviews) {
+                
+                if (rev.id == movie.imdbID) {
+                    totalRating += Number(rev.rating);
+                    count++;
                 }
             }
         }
-        return movies;
+
+        // 5. Efter att ha kollat alla användare: Räkna ut medelvärdet eller sätt 5
+        if (count > 0) {
+            movie.rating = totalRating / count;
+        } else {
+            movie.rating = 5; 
+        }
+    }
+
+    // 6. Skicka tillbaka filmerna (nu har de kvar sitt imdbID!)
+    return movies;
     }
 
     deleteReview(id){

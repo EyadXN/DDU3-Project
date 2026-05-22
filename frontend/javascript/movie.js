@@ -1,6 +1,9 @@
 
 
 class movie {
+    constructor(){
+        this.chosenRating = 0;
+    }
     createMovie(movie) {
         let movieDiv = document.getElementById("movie");
         movieDiv.innerHTML = `
@@ -9,9 +12,8 @@ class movie {
             </div>
             <div id="right">
                 <b>${movie.Title}</b>
-                <p>${movie.rating}$</p>
-                <p>${movie.Year}$</p>
-                <p>${movie.category} - <i>${movie.description}</i></p>
+                <p class="red">${movie.rating}☆</p>
+                <p>${movie.Year} - ${movie.category} - <i>${movie.description}</i> </p>
                 <div id ="review">
                     <h3>Sätt ditt betyg:</h3>
                     <div id="star-container">
@@ -36,14 +38,26 @@ class movie {
                   `;
 
     }
+    setupStars(){
 
+    }
 
     async upLoadProduct() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
         let movieDiv = document.getElementById("movie");
-        let movie;
-        try {
+        let movie = {
+            Title: "Wake Up Dead Man",
+            Year: "2025",
+            imdbID: "tt14364480",
+            Type: "movie",
+            Poster: "https://m.media-amazon.com/images/M/MV5BY2Q0OTA5MTEtNWU4NC00ZWFmLTg5NmYtNDFmODViYWUxZmJkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+            category: "Drama",
+            description: "Ingen beskrivning tillgänglig ännu.",
+            rating: 8
+        }
+        this.createMovie(movie);
+        /*try {
             console.log("hallå")
             movie = await api.getMovie(id);
             console.log(movie)
@@ -52,7 +66,8 @@ class movie {
         catch (error) {
             movieDiv.innerHTML = "<h3>Didn't work</h3>";
             console.log("försöke igen B")
-        }
+        }*/
+
 
     }
 }
