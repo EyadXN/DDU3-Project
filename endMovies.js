@@ -1,8 +1,9 @@
 class Movies {
 
     getMovie(id, movies){
+        console.log("apiMovies: "+ movies)
         for(let movie of movies){
-            if(movie.id == id){
+            if(movie.imdbID == id){
                 return movie;
             }
             else{ return null}

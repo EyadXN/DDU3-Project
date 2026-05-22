@@ -45,28 +45,19 @@ class movie {
     async upLoadProduct() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
+        console.log("id" + id)
         let movieDiv = document.getElementById("movie");
-        let movie = {
-            Title: "Wake Up Dead Man",
-            Year: "2025",
-            imdbID: "tt14364480",
-            Type: "movie",
-            Poster: "https://m.media-amazon.com/images/M/MV5BY2Q0OTA5MTEtNWU4NC00ZWFmLTg5NmYtNDFmODViYWUxZmJkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
-            category: "Drama",
-            description: "Ingen beskrivning tillgänglig ännu.",
-            rating: 8
-        }
-        this.createMovie(movie);
-        /*try {
+        let movie;
+        try {
             console.log("hallå")
             movie = await api.getMovie(id);
-            console.log(movie)
+            console.log("movie:" + movie)
             this.createMovie(movie);
         }
         catch (error) {
             movieDiv.innerHTML = "<h3>Didn't work</h3>";
             console.log("försöke igen B")
-        }*/
+        }
 
 
     }

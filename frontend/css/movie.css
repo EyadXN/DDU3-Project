@@ -90,7 +90,7 @@ header div div{
     padding-top: 100px;
     padding-bottom: 100px;
     display: flex;
-    box-shadow: 5px 5px 5px 5px #780606;
+    box-shadow: 5px 5px 0 5px #780606;
     justify-content: space-evenly;
 }
 .main #movie #right{

@@ -23,7 +23,7 @@ class Movies {
       let movie = movies[ramNum];
       if (!disMovie.includes(movie)) {
         let movieBox = document.createElement("div");
-        movieBox.innerHTML = `<a href="movie.html?id=${movie.id}" class="movieBox">
+        movieBox.innerHTML = `<a href="movie.html?id=${movie.imdbID}" class="movieBox">
         <img src="${movie.Poster}">
         <p>${movie.Title}</p>
         <p>${movie.category}</p>

@@ -12,23 +12,25 @@ class API {
       }
       movies = await request.json();
       console.log("movies:", movies)
+      
     } catch (error) {
       throw new Error(error + "network error Abasin")
     }
-
+    
     return movies;
   }
   async getMovie(id) {
     let response;
     try {
-      response = await fetch("/movies" + id, {
-        headers: { "Accept": "application/json" }
+      response = await fetch("/movies/" + id, {
+      headers: { "Accept": "application/json" }
       });
       if (!response.ok) {
         throw new Error("Kunde inte hämta filmen pågrund av Responsen")
       }
+      console.log("movie", movie)
       let movie = await response.json();
-      return product;
+      return movie;
 
     } catch (error) {
       console.error(error);
