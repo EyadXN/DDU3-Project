@@ -88,6 +88,19 @@ header div div{
     background-color: #780606;
 }
 
+#profile {
+    background-image: url("../img/movieimg/user.png");
+    width: 45px;
+    height: 45px;
+    display: block;
+    background-color: darkred;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    border-radius: 50%;
+    background-origin: content-box;
+    padding: 10px;
+}
 
 #loginBoxContainer {
     display: flex;

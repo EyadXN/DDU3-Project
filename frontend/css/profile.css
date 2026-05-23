@@ -27,6 +27,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  background-color: black;
 }
 
 header {
@@ -105,10 +106,35 @@ header div div {
   padding: 10px;
 }
 
-#movie-container {
-  max-width: 1300px;
+main {
+  width: 75%;
+  margin: 100px auto 0 auto;
+  border: solid 2px #780606;
+  color: white;
+  padding: 20px;
 }
 
-.movieBox{
-  color: black;
+#profileImg {
+  background-image: url("../img/movieimg/user\ \(1\).png");
+  height: 300px;
+  width: 300px;
+  background-color: white;
+  background-origin: content-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 75px;
+  border-radius: 50%;
+}
+
+#profileTop {
+    border-bottom: #780606 solid 2px;
+    display: flex;
+    padding-bottom: 20px;
+    justify-content:flex-start;
+    align-items: center;
+    gap: 5%
+}
+
+#welcomeMessage {
+    font-size: 62px;
 }
