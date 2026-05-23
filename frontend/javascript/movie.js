@@ -85,6 +85,15 @@ class movie {
                       
                 </div> 
             </div>
+            <style>
+                body {
+                    background-image: url('${movie.Poster}');
+                    background-position: center;
+                    background-attachment: fixed;
+                    backdrop-filter: blur(10px);
+                    min-height: 100vh;
+                }
+            </style>
                   `;
 
     }
