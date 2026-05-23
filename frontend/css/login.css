@@ -58,6 +58,17 @@ header nav ul #special{
     color: black ;
     border-radius: 5px;
 }
+header nav ul #special a{
+    color: black;
+}
+header nav ul button{
+    padding: 5px 10px;
+    background-color: rgb(214, 163, 22);
+    color: black ;
+    border-radius: 10px;
+    font-family: "neue";
+    font-size: 20px;
+}
 header div{
     display: flex;
     gap: 5px;
@@ -76,6 +87,7 @@ header div div{
     border-radius: 50%;
     background-color: #780606;
 }
+
 
 #loginBoxContainer {
     display: flex;

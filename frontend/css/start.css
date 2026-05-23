@@ -47,6 +47,14 @@ header nav ul li, a{
     text-decoration: none;
     color: rgb(167, 160, 160);
 }
+header nav ul button{
+    padding: 5px 10px;
+    background-color: rgb(214, 163, 22);
+    color: black ;
+    border-radius: 10px;
+    font-family: "neue";
+    font-size: 20px;
+}
 header nav ul #special{
     padding: 5px 7px;
     background-color: rgb(214, 163, 22);

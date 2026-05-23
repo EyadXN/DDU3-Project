@@ -68,6 +68,13 @@ header div p {
     font-family: "Bungee";
     margin-left: 5px;
 }
+header button{
+    padding: 5px 7px;
+    background-color: rgb(214, 163, 22);
+    color: black ;
+    border-radius: 5px;
+    font-family: "neue";
+}
 header div div{
     width: 20px;
     height: 20px;
@@ -150,6 +157,6 @@ header div div{
     transition: color 0.2s;
 }
 
-.star.selected {
+.star .selected {
     color: #ffcc00; 
 }

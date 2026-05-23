@@ -1,3 +1,54 @@
+function nav(){
+        let header = document.querySelector("header");
+        const loggedInUser = localStorage.getItem("loggedInUser")
+        if(loggedInUser){
+            header.innerHTML = `
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <p>Revaiew</p>
+            </div>
+                <nav>
+                    <ul>
+                        <li><a id="profile" href="profile.html"></a></li>
+                        <li><a href="discover.html">DISCOVER</a></li>
+                        <button>Log out</button><
+                    </ul>
+                </nav>
+            `
+        }
+        else{
+            header.innerHTML = `
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <p>Revaiew</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="discover.html">DISCOVER</a></li>
+                        <li id="special"><a href="login.html">SIGN IN</a></li>
+                    </ul>
+                </nav>
+            `
+        }
+    }
+
+nav();
+
+function logOut(){
+    const logOutBtn = document.getElementById("logOutBtn");
+
+    logOutBtn.addEventListener("click", function(){
+        localStorage.removeItem("loggedInUser");
+        nav();
+        window.location.href = "login.html"
+    })
+}
+logOut();
+
 const signUpButton = document.getElementById("signUpSubmit");
 const loginButton = document.getElementById("loginSubmit");
 

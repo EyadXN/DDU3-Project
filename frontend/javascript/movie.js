@@ -4,6 +4,53 @@ class movie {
     constructor(){
         this.chosenRating = 0;
     }
+    nav(){
+        let header = document.querySelector("header");
+        const loggedInUser = localStorage.getItem("loggedInUser")
+        if(loggedInUser){
+            header.innerHTML = `
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <p>Revaiew</p>
+            </div>
+                <nav>
+                    <ul>
+                        <li><a id="profile" href="profile.html"></a></li>
+                        <li><a href="discover.html">DISCOVER</a></li>
+                        <li id="special"><button>Log out</button></li>
+                    </ul>
+                </nav>
+            `
+        }
+        else{
+            header.innerHTML = `
+               <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <p>Revaiew</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="discover.html">DISCOVER</a></li>
+                        <li id="special"><a href="login.html">SIGN IN</a></li>
+                    </ul>
+                </nav>
+            `
+        }
+    }
+
+    logOut(){
+    const logOutBtn = document.getElementById("logOutBtn");
+
+    logOutBtn.addEventListener("click", function(){
+        localStorage.removeItem("loggedInUser");
+        nav();
+        window.location.href = "login.html"
+    })
+}
     createMovie(movie) {
         let movieDiv = document.getElementById("movie");
         movieDiv.innerHTML = `
@@ -137,3 +184,4 @@ let spec = new movie();
 spec.upLoadProduct();
 spec.setupStars();
 spec.setupPostReview();
+spec.logOut();
