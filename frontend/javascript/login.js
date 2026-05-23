@@ -52,10 +52,14 @@ loginButton.addEventListener("click", async () => {
 
         const users = await response.json();
 
-        const foundUser = users.find(user =>
-            user.username === username &&
-            user.password === password
-        );
+        let foundUser = false;
+        let user;
+        for(user of users){
+            if(user.name === username && user.password === password){
+                foundUser = true;
+                break
+            } 
+        }
 
         if (foundUser) {
 
@@ -65,20 +69,22 @@ loginButton.addEventListener("click", async () => {
 
             localStorage.setItem(
                 "loggedInUser",
-                JSON.stringify(foundUser)
+                JSON.stringify(user)
             );
+            window.location.href = "discover.html"
 
         }
         else {
 
             console.log("Wrong username or password");
+            alert("Couldn't find user")
 
         }
 
     }
     catch (error) {
 
-        console.log("Error:", error);
+        console.log("Request failed, netword error:", error);
 
     }
 

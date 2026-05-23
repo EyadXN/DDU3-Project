@@ -12,7 +12,7 @@ class movie {
             </div>
             <div id="right">
                 <b>${movie.Title}</b>
-                <p class="red">${movie.rating}☆</p>
+                <h2>${movie.rating}☆</h2>
                 <p>${movie.Year} - ${movie.category} - <i>${movie.description}</i> </p>
                 <div id ="review">
                     <h3>Sätt ditt betyg:</h3>
@@ -30,15 +30,20 @@ class movie {
                     </div>
     
                     <p>Valt betyg: <span id="rating-text">0</span>/10</p>
-
-                    <textarea id="review-text" placeholder="Skriv din recension här..."></textarea>
-                    <button id="post-review-btn">Posta recension</button>  
+                    <div id ="postTxt">
+                        <textarea id="review-text" placeholder="Skriv din recension här..."></textarea>
+                        <button id="post-review-btn">Post</button>
+                    </div>
+                      
                 </div> 
             </div>
                   `;
 
     }
     setupStars(){
+        let stars = document.querySelectorAll(".class");
+        let revBtn = document.getElementById("post-review-btn");
+
 
     }
 
@@ -55,7 +60,7 @@ class movie {
             this.createMovie(movie);
         }
         catch (error) {
-            movieDiv.innerHTML = "<h3>Didn't work</h3>";
+            movieDiv.innerHTML = "<h3>Couldn't find the movie...</h3>";
             console.log("försöke igen B")
         }
 

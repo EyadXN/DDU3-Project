@@ -6,8 +6,8 @@ class Movies {
             if(movie.imdbID == id){
                 return movie;
             }
-            else{ return null}
         }
+       return null 
     }
     
     getStartRatings(movies, users){

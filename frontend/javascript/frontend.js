@@ -28,8 +28,9 @@ class API {
       if (!response.ok) {
         throw new Error("Kunde inte hämta filmen pågrund av Responsen")
       }
-      console.log("movie", movie)
+      
       let movie = await response.json();
+      console.log("movie", movie)
       return movie;
 
     } catch (error) {
