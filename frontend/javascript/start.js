@@ -204,6 +204,7 @@ function nav(){
                     </ul>
                 </nav>
             `
+            logOut();
         }
         else{
             header.innerHTML = `

@@ -19,10 +19,11 @@ class movie {
                     <ul>
                         <li><a id="profile" href="profile.html"></a></li>
                         <li><a href="discover.html">DISCOVER</a></li>
-                        <li id="special"><button>Log out</button></li>
+                        <button id="logOutBtn">Log out</button>
                     </ul>
                 </nav>
             `
+            spec.logOut();
         }
         else{
             header.innerHTML = `
@@ -184,4 +185,4 @@ let spec = new movie();
 spec.upLoadProduct();
 spec.setupStars();
 spec.setupPostReview();
-spec.logOut();
+spec.nav();

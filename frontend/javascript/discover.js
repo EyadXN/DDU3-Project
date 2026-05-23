@@ -51,11 +51,12 @@ class Movies {
                 <nav>
                     <ul>
                         <li><a id="profile" href="profile.html"></a></li>
-                        <li><a href="start.html">START</a></li>
-                        <button>Log out</button>
+                        <li><a href="start.html">HOME</a></li>
+                        <button id="logOutBtn">Log out</button>
                     </ul>
                 </nav>
             `
+            mov.logOut();
         }
         else{
             header.innerHTML = `
@@ -67,7 +68,7 @@ class Movies {
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="discover.html">DISCOVER</a></li>
+                        <li><a href="start.html">HOME</a></li>
                         <li id="special"><a href="login.html">SIGN IN</a></li>
                     </ul>
                 </nav>
@@ -89,4 +90,3 @@ class Movies {
 let mov = new Movies();
 mov.displayMovies();
 mov.nav();
-mov.logOut();
