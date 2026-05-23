@@ -158,6 +158,6 @@ header div div{
     transition: color 0.2s;
 }
 
-.star .selected {
+.star.selected {
     color: #ffcc00; 
 }

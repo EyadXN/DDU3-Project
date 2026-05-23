@@ -925,7 +925,14 @@
       "name": "Eyad",
       "password": "craycray",
       "id": 2,
-      "reviews": []
+      "reviews": [
+        {
+          "Title": "King of Comedy",
+          "imdbID": "tt0188766",
+          "rating": "8",
+          "recension": "peak comedy ngl"
+        }
+      ]
     }
   ]
 }

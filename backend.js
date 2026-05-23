@@ -19,17 +19,14 @@ async function handler(request) {
     
     if (url.pathname.startsWith(moviesUrl)) {
 
-        let dataBase = Deno.readTextFileSync("database.json");
-        
-        dataBase = JSON.parse(dataBase);
-        let users = dataBase.userList;
-        let orginMovies = dataBase.movieList;
-        let movies = mov.getStartRatings(orginMovies, users);
-
-
-
-
         if (request.method == "GET") {
+
+            let dataBase = Deno.readTextFileSync("database.json"); 
+            dataBase = JSON.parse(dataBase);
+            let users = dataBase.userList;
+            let orginMovies = dataBase.movieList;
+            let movies = mov.getStartRatings(orginMovies, users);
+
             if (request.headers.get("Accept") == "application/json") {
                 if (url.pathname == moviesUrl) {
                     if (!url.search) {
@@ -76,14 +73,14 @@ async function handler(request) {
     }
     if (url.pathname.startsWith(usersUrl)) {
 
-        let dataBase = Deno.readTextFileSync("database.json");
-        let url = new URL(request.url);
-        dataBase = JSON.parse(dataBase);
-        let users = dataBase.userList;
-        let movies = dataBase.movieList;
-
-
         if (request.method == "GET") {
+
+            let dataBase = Deno.readTextFileSync("database.json");
+            let url = new URL(request.url);
+            dataBase = JSON.parse(dataBase);
+            let users = dataBase.userList;
+            let movies = dataBase.movieList;
+
             if (request.headers.get("Accept") == "application/json") {
 
                 let route = new URLPattern({ pathname: `${usersUrl}/:id` });
