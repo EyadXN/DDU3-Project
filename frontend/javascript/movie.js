@@ -23,7 +23,7 @@ class movie {
                     </ul>
                 </nav>
             `
-            spec.logOut();
+            this.logOut();
         }
         else{
             header.innerHTML = `
@@ -45,10 +45,9 @@ class movie {
 
     logOut(){
     const logOutBtn = document.getElementById("logOutBtn");
-
-    logOutBtn.addEventListener("click", function(){
+    logOutBtn.addEventListener("click", () =>{
         localStorage.removeItem("loggedInUser");
-        nav();
+        this.nav();
         window.location.href = "login.html"
     })
 }
@@ -98,7 +97,7 @@ class movie {
 
     }
     setupStars(){
-        let stars = document.querySelectorAll(".class");
+        let stars = document.querySelectorAll(".star");
         let ratingTxt = document.getElementById("rating-text")
 
         for(let star of stars){
