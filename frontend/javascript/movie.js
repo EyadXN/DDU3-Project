@@ -101,15 +101,15 @@ class movie {
         let ratingTxt = document.getElementById("rating-text")
 
         for(let star of stars){
-            star.addEventListener("click", function(){
+            star.addEventListener("click", ()=>{
                 
                 this.chosenRating = star.getAttribute("data-value");
                 ratingTxt.textContent = this.chosenRating;
 
                 for(let s of stars){
                     const starValue = star.getAttribute("data-value");
-                    if(starValue = this.chosenRating){
-                        s.classList.add("seleceted");
+                    if(starValue <= this.chosenRating){
+                        s.classList.add("selected");
                     }
                     else{
                         s.classList.remove("selected");
@@ -180,6 +180,8 @@ class movie {
             movie = await api.getMovie(id);
             console.log("movie:" + movie)
             this.createMovie(movie);
+            this.setupStars();
+            this.setupPostReview();
         }
         catch (error) {
             movieDiv.innerHTML = "<h3>Couldn't find the movie...</h3>";
@@ -191,6 +193,5 @@ class movie {
 }
 let spec = new movie();
 spec.upLoadProduct();
-spec.setupStars();
-spec.setupPostReview();
+
 spec.nav();
