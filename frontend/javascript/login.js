@@ -71,7 +71,7 @@ loginButton.addEventListener("click", async () => {
                 "loggedInUser",
                 JSON.stringify(user)
             );
-            window.location.href = "discover.html"
+            window.location.href = "../html/discover.html"
 
         }
         else {

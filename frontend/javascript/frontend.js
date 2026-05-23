@@ -69,6 +69,33 @@ class API {
 
   }
 
+  async postReview(userId, review){
+    let newReviewObj = {
+      id: userId,
+      review: review
+    }
+    try{
+      const response = await fetch("/movies", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(newReviewObj)
+      });
+      if (!response.ok) {
+        throw new Error("response är inte ok!")
+      }
+
+      const data = await response.json();
+      return data;
+    }catch(error){
+      alert("frontend Requesten gick inte igenom", error)
+      return
+    }
+}
 
 }
 let api = new API();

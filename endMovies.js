@@ -27,7 +27,7 @@ class Movies {
             }
         }
 
-        // 5. Efter att ha kollat alla användare: Räkna ut medelvärdet eller sätt 5
+        
         if (count > 0) {
             movie.rating = totalRating / count;
         } else {
@@ -35,37 +35,44 @@ class Movies {
         }
     }
 
-    // 6. Skicka tillbaka filmerna (nu har de kvar sitt imdbID!)
     return movies;
     }
 
     deleteReview(id){
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
+
         for(let user of data.userList){
            for(let rev of user.reviews){
+
                 if(rev.id == id){
                     user.reviews.remove(rev);
                 }
            }
         }
+        Deno.writeTextFileSync("./database.json", JSON.stringify(data,null, 2));
+        return
     }
 
-    reviewControl(req){
-        if(req.rating){
-            return true;
-        }
-        else{ return false}
-    }
     postReview(req){
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
-        let users = data.userList;
-        for(let user of users){
+        let review = req.review;
+        let user;
+        let reviewLength;
+        for(user of data.userList){
             if(req.id == user.id){
-                
+                reviewLength = user.reviews.length;
+                user.reviews.push(review);
+                break;
             }
         }
+        
+        Deno.writeTextFileSync("./database.json", JSON.stringify(data,null, 2));
+        if(user.reviews.length === reviewLength){
+            return false
+        }
+        return true;
     }
 
 }

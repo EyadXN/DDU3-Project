@@ -908,8 +908,8 @@
       "id": 0,
       "reviews": [
         {
-          "title": "The Batman",
-          "id": "tt0372784",
+          "Title": "The Batman",
+          "imdbID": "tt0372784",
           "rating": "5",
           "recension": "Too much fanservice, not enough action"
         }

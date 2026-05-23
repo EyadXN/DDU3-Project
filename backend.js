@@ -62,13 +62,11 @@ async function handler(request) {
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
                 let req = await request.json();
-                //* vet inte om post user rating ska vara här eller i usersUrl
-                if(mov.reviewControl(req)){
-                    let rating = mov.postReview(req);
+                let addedReview = mov.postReview(req);
+                if(addedReview){
+                    return new Response(JSON.stringify(null), options)
                 }
-                else {
-                    return new Response(JSON.stringify("Bad Request"), { status: 400 })
-                }
+                 return new Response(JSON.stringify("Not Found"), { status: 404 })
             }
             else {
                 return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
@@ -82,6 +80,7 @@ async function handler(request) {
         let url = new URL(request.url);
         dataBase = JSON.parse(dataBase);
         let users = dataBase.userList;
+        let movies = dataBase.movieList;
 
 
         if (request.method == "GET") {
@@ -97,6 +96,9 @@ async function handler(request) {
                         return new Response(JSON.stringify("Not Found"), { status: 404 })
                     }
                     return new Response(JSON.stringify(user), options)
+                }
+                else{
+                    return new Response(JSON.stringify(users), options)
                 }
             }
             else {
