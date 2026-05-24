@@ -91,7 +91,7 @@ async function handler(request) {
                     return new Response(JSON.stringify(user), options)
                 }
                 else{
-                    return new Response(JSON.stringify(dataBase.UserList), options)
+                    return new Response(JSON.stringify(dataBase.userList), options)
                 }
             }
             else {

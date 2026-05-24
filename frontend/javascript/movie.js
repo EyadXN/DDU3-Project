@@ -163,6 +163,8 @@
 
                     try{
                         let postrev = await api.postReview(user.id, review);
+                        window.location.href = "../html/discover.html";
+                        alert("Du har postat en recension!!")
                         return
                     }catch(error){
                         alert("couldn't post review because api.posetReview failed somehow again....")
