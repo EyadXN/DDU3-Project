@@ -21,11 +21,8 @@ async function handler(request) {
 
         if (request.method == "GET") {
 
-            let dataBase = Deno.readTextFileSync("database.json"); 
-            dataBase = JSON.parse(dataBase);
-            let users = dataBase.userList;
-            let orginMovies = dataBase.movieList;
-            let movies = mov.getStartRatings(orginMovies, users);
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json")); 
+            let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
 
             if (request.headers.get("Accept") == "application/json") {
                 if (url.pathname == moviesUrl) {
@@ -35,13 +32,13 @@ async function handler(request) {
                     let year = url.searchParams.get("year");
                     let category = url.searchParams.get("category");
                     let rating = url.searchParams.get("rating");
-                    console.log("du är inne")
 
-                    let filtered = pro.filterSearch(movies, year, category, rating);
-                    console.log("filtered", filtered)
+                    let filtered = pro.filterSearch(movies, year, category, rating)
                     return new Response(JSON.stringify(filtered), options);
                 }
+
                 let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
+
                 if (route.test(request.url)) {
                     let match = route.exec(request.url);
                     let movie = mov.getMovie(match.pathname.groups.id, movies);
@@ -58,7 +55,9 @@ async function handler(request) {
         }
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
+
                 let req = await request.json();
+
                 let addedReview = mov.postReview(req);
                 if(addedReview){
                     return new Response(JSON.stringify(null), options)
@@ -75,11 +74,8 @@ async function handler(request) {
 
         if (request.method == "GET") {
 
-            let dataBase = Deno.readTextFileSync("database.json");
-            let url = new URL(request.url);
-            dataBase = JSON.parse(dataBase);
-            let users = dataBase.userList;
-            let movies = dataBase.movieList;
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+            let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
 
             if (request.headers.get("Accept") == "application/json") {
 
@@ -88,14 +84,14 @@ async function handler(request) {
                 if (route.test(request.url)) {
 
                     let match = route.exec(request.url);
-                    let user = use.findUser(match.pathname.groups.id, users)
+                    let user = use.findUser(match.pathname.groups.id, dataBase.userList)
                     if (user == null) {
                         return new Response(JSON.stringify("Not Found"), { status: 404 })
                     }
                     return new Response(JSON.stringify(user), options)
                 }
                 else{
-                    return new Response(JSON.stringify(users), options)
+                    return new Response(JSON.stringify(dataBase.UserList), options)
                 }
             }
             else {
@@ -114,13 +110,13 @@ async function handler(request) {
             }
         }
        if (request.method == "DELETE") {
-            let moviesLength = movies.length;
             let route = new URLPattern({ pathname: `${usersUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-                let filteredMovies = mov.deleteReview(match.pathname.groups.id);
+    
+                let review = use.deleteReview(match.pathname.groups.id);
 
-                if (moviesLength === filteredMovies.length) {
+                if (!review) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })
                 }
                 else {
