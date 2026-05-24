@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/profile.css">
 </head>
+
 <body>
     <header>
     </header>
@@ -15,14 +17,26 @@
             <p id="welcomeMessage"></p>
         </div>
         <div id="container">
-            <div id="filter"></div>
+            <div id="filter">
+                <form id="my-form" action="">
+                    <select name="category" id="category">
+                        <option value="">Category</option>
+                    </select>
+                    <P>Max Rating:</P>
+                    <input class="rating" type="text" name="maxRating">
+                    <P>Min Rating:</P>
+                    <input class="rating" type="text" name="minRating">
+                    <button id="filterButton">Filter</button>
+                </form>
+            </div>
             <div id="movieList">
                 <h2>Movies you have reviewed</h2>
             </div>
         </div>
-       
+
     </main>
     <script src="../javascript/frontend.js"></script>
     <script src="../javascript/profile.js"></script>
 </body>
+
 </html>

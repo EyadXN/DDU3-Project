@@ -39,6 +39,8 @@ function nav(){
 async function uploadMovieList(){
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     let movies;
+    let mRev;
+    let oRev;
     let myList = [];
     try{
         movies = await api.getMovies();
@@ -49,6 +51,8 @@ async function uploadMovieList(){
         for(let movie of movies){
             if(rev.imdbID == movie.imdbID){
                 myList.push(movie);
+                mRev = rev.rating;
+                oRev = movie.rating;
             }
         }
     }
@@ -58,14 +62,25 @@ async function uploadMovieList(){
         for(let mov of myList){
             movieList.innerHTML+=`
             <div class="movie">
-                <img class="poster" src="${mov.Poster}" alt="">
+                <div class="poster-container">
+                    <img class="poster" src="${mov.Poster}" alt="">
+                    <div class = "mRev">${mRev}</div>
+                    <div class = "oRev">${oRev}</div>
+                </div>  
                 <div>
                     <b>${mov.Title}</b>
                     <p>${mov.Year} - ${mov.category}</p>
                 </div>
+                <button class="remove">Remove</button>
             </div>
             `;
+            document.querySelector(".remove").addEventListener("click", async function(){
+                try{
+                    let removeRev = api.deleteReview(user.id, mov);
+                }catch(error){}
+            })
         }
+
 
     }
 
