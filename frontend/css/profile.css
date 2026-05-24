@@ -156,6 +156,7 @@ main {
   padding-top: 100px;
   position: relative;
   justify-content: center;
+  align-content: flex-start;
 }
 #movieList h2{
   position: absolute;

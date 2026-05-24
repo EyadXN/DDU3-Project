@@ -943,7 +943,32 @@
       "name": "Eyad",
       "password": "craycray",
       "id": 2,
-      "reviews": []
+      "reviews": [
+        {
+          "Title": "The Lion King",
+          "imdbID": "tt0110357",
+          "rating": "10",
+          "recension": "Best of its time"
+        },
+        {
+          "Title": "World War Z",
+          "imdbID": "tt0816711",
+          "rating": "7",
+          "recension": "Classic"
+        },
+        {
+          "Title": "Thor: Love and Thunder",
+          "imdbID": "tt10648342",
+          "rating": "9",
+          "recension": ""
+        },
+        {
+          "Title": "Godzilla: King of the Monsters",
+          "imdbID": "tt3741700",
+          "rating": "3",
+          "recension": ""
+        }
+      ]
     }
   ]
 }
