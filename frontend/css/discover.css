@@ -112,7 +112,7 @@ header div div {
   gap: 50px;
   justify-items: center;
   align-items: center;
-  max-width: 2500px;
+  max-width: 100%;
 }
 
 .moviePic img {
