@@ -906,14 +906,7 @@
       "name": "Abasin",
       "password": "FrozenDachri",
       "id": 0,
-      "reviews": [
-        {
-          "Title": "The Batman",
-          "imdbID": "tt0372784",
-          "rating": "5",
-          "recension": "Too much fanservice, not enough action"
-        }
-      ]
+      "reviews": []
     },
     {
       "name": "Vincent",
@@ -925,14 +918,7 @@
       "name": "Eyad",
       "password": "craycray",
       "id": 2,
-      "reviews": [
-        {
-          "Title": "King of Comedy",
-          "imdbID": "tt0188766",
-          "rating": "8",
-          "recension": "peak comedy ngl"
-        }
-      ]
+      "reviews": []
     }
   ]
 }
