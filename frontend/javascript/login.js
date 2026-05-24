@@ -71,7 +71,7 @@ signUpButton.addEventListener("click", async () => {
 
         const data = await api.postUser(newUser);
 
-        console.log("User created:", data);
+        console.log("User created:", data[data.length - 1]);
 
     }
     catch (error) {
