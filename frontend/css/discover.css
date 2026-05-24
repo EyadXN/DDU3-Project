@@ -128,7 +128,7 @@ header div div {
   text-align: center;
   background-color: black;
   margin: 0;
-  padding: 10px;
+  padding: 5px;
   color: white;
   text-decoration: underline;
   text-decoration-color: black;
@@ -136,4 +136,5 @@ header div div {
 
 .movie {
   max-width: 360px;
+  max-height: 705.5px;
 }
