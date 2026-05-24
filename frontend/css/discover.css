@@ -107,8 +107,9 @@ header div div {
 
 #movie-container {
   margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 50px;
   justify-items: center;
   align-items: center;
@@ -119,7 +120,6 @@ header div div {
   color: black;
   width: 360px;
   height: 500px;
-  margin: auto;
   margin-top: 50px;
   text-decoration: none;
 }
@@ -132,6 +132,6 @@ header div div {
   color: white;
   text-decoration: underline;
   text-decoration-color: black;
-  font-size: 18px;
-  max-width: 3600px;
+  font-size: auto;
+  max-width: 360px;
 }
