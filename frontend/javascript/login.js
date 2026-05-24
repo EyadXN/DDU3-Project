@@ -56,9 +56,11 @@ const loginButton = document.getElementById("loginSubmit");
 
 signUpButton.addEventListener("click", async () => {
 
-    const username = document.getElementById("usernameInput").value;
+    const username = document.getElementById("signUpUsernameInput").value;
 
-    const password = document.getElementById("passwordInput").value;
+    const password = document.getElementById("signUpPasswordInput").value;
+
+    const passwordConfirm = document.getElementById("signUpPasswordInputconfirm").value;
 
     const newUser = {
         name: username,
@@ -67,28 +69,32 @@ signUpButton.addEventListener("click", async () => {
         reviews: []
     };
 
-    try {
+    if (passwordConfirm === password) {
+        try {
 
-        const data = await api.postUser(newUser);
+            const data = await api.postUser(newUser);
 
-        console.log("User created:", data[data.length - 1]);
+            console.log("User created:", data[data.length - 1]);
 
+        }
+        catch (error) {
+
+            console.log("Error:", error);   
+
+        } 
+    } else {
+        console.log("Passwords do not match!");
+        alert("Please input same password!");
     }
-    catch (error) {
-
-        console.log("Error:", error);   
-
-    }
-
 });
 
 loginButton.addEventListener("click", async () => {
 
     const username =
-        document.getElementById("usernameInput").value;
+        document.getElementById("loginUsernameInput").value;
 
     const password =
-        document.getElementById("passwordInput").value;
+        document.getElementById("loginPasswordInput").value;
 
     try {
 

@@ -102,24 +102,24 @@ header div div{
     padding: 10px;
 }
 
-#loginBoxContainer {
+main {
     display: flex;
     min-height: 90vh;
     align-items: center;
     justify-content: center;
+    gap: 50px;
 }
 
-#loginBox {
+#loginBox, #signupBox {
     display: flex;
     flex-direction: column;
     background-color: black;
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 0px 0px 15px red;
-    border: solid 5px lightcoral;
+    min-height: 375px;
 }
 
-#loginBox form {
+#loginBox form, #signupBox form {
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -127,10 +127,14 @@ header div div{
 }
 
 #loginBox form input {
-    padding: 10px;
+    padding: 22px;
 }
 
-#loginBox div {
+#signupBox form input {
+    padding: 12px;
+}
+
+#loginBox div, #signupBox div {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -138,25 +142,24 @@ header div div{
     gap: 5px;
 }
 
-#loginBox div p {
+#loginBox div p, #signupBox div p {
     color: rgb(167, 160, 160);
     font-size: 30px;
     font-family: "Bungee";
     margin-left: 5px;
 }
-#loginBox div div{
+#loginBox div div, #signupBox div div{
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: #780606;
 }
 
-input[type=submit] {
+form input[type=button] {
   width: 100%;
   background-color: #780606;
   color: white;
   font-size: 14px;
-  padding: 14px;
   border: none;
   border-radius: 4px;
   cursor: pointer;

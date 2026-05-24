@@ -13,7 +13,7 @@
             <div></div>
             <div></div>
             <div></div>
-            <p>Revaiew</p>
+            <p>Revaiew</p>  
         </div>
         <nav>
             <ul>
@@ -24,25 +24,42 @@
             </ul>
         </nav>
     </header>
-    <div id="loginBoxContainer">
-        <div id="loginBox">
-            <div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <p>Revaiew</p>
-            </div> 
-            <form id="userForm">
-                <input type="text" id="usernameInput" placeholder="Enter Username">
-                <input type="password" id="passwordInput" placeholder="Enter Password">
-                <input id="loginSubmit" type="button" value="Login">
-                <input id="signUpSubmit" type="button" value="Sign up">
-            </form>
+    <main>
+        <div id="loginBoxContainer">
+            <div id="loginBox" style="box-shadow: 0px 0px 15px red; border: solid 5px lightcoral;">
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <p>Revaiew - Login</p>
+                </div> 
+                <form id="userForm">
+                    <input type="text" id="loginUsernameInput" placeholder="Enter Username">
+                    <input type="password" id="loginPasswordInput" placeholder="Enter Password">
+                    <input id="loginSubmit" type="button" value="Login">
+                </form>
+            </div>
         </div>
-    </div>
-
+        <div id="signUpBoxContainer">
+            <div id="signupBox" style="box-shadow: 0px 0px 15px rgb(214, 163, 22); border: solid 5px darkorange;">
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <p>Revaiew - Sign Up</p>
+                </div> 
+                <form id="userForm">
+                    <input type="text" id="signUpUsernameInput" placeholder="Enter Username">
+                    <input type="password" id="signUpPasswordInput" placeholder="Enter Password">
+                    <input type="password" id="signUpPasswordInputconfirm" placeholder="Confirm Password">
+                    <input id="signUpSubmit" type="button" value="Sign up">
+                </form>
+            </div>
+        </div>
+    </main>
+    
     <script src="/javascript/frontend.js"></script>
     <script src="/javascript/login.js"></script>
-
+    
 </body>
 </html>
