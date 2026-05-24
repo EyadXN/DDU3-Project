@@ -68,10 +68,10 @@ header div {
   align-items: center;
 }
 
-header nav ul button{
+header nav ul button {
   padding: 5px 10px;
   background-color: rgb(214, 163, 22);
-  color: black ;
+  color: black;
   border-radius: 10px;
   font-family: "neue";
   font-size: 20px;
@@ -106,9 +106,32 @@ header div div {
 }
 
 #movie-container {
-  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 50px;
+  justify-items: center;
+  align-items: center;
+  max-width: 2500px;
 }
 
-.movieBox{
+.moviePic img {
   color: black;
+  width: 360px;
+  height: 500px;
+  margin: auto;
+  margin-top: 50px;
+  text-decoration: none;
+}
+
+.movie p {
+  text-align: center;
+  background-color: black;
+  margin: 0;
+  padding: 10px;
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: black;
+  font-size: 18px;
+  max-width: 3600px;
 }

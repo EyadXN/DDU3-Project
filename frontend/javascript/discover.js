@@ -1,46 +1,47 @@
 class Movies {
-  async getAllMovies() {
-    try {
-      let movies = await api.getMovies()
+    async getAllMovies() {
+        try {
+            let movies = await api.getMovies()
 
-      console.log("All movies", movies);
-      return movies;
+            console.log("All movies", movies);
+            return movies;
 
-    } catch (error) {
-      console.error("Det faktiska felet i frontend:", error); // <-- Lägg till denna för att se krocken i konsolen!
-      throw new Error(`Network error Abasin: ${error.message}`);
+        } catch (error) {
+            console.error("Det faktiska felet i frontend:", error); // <-- Lägg till denna för att se krocken i konsolen!
+            throw new Error(`Network error Abasin: ${error.message}`);
+        }
     }
-  }
 
-  async displayMovies() {
-    let movieContainer = document.getElementById("movie-container");
+    async displayMovies() {
+        let movieContainer = document.getElementById("movie-container");
 
-    let movies = await this.getAllMovies();
-    console.log(movies)
-    let disMovie = [];
-    while (disMovie.length < 30 && disMovie.length < movies.length) {
-      let ramNum = Math.floor(Math.random() * movies.length);
-      let movie = movies[ramNum];
-      if (!disMovie.includes(movie)) {
-        let movieBox = document.createElement("div");
-        movieBox.innerHTML = `<a href="movie.html?id=${movie.imdbID}" class="movieBox">
-        <img src="${movie.Poster}">
-        <p>${movie.Title}</p>
-        <p>${movie.category}</p>
-        <p>${movie.Title}</p>
-        <p>${movie.rating}</p>
-        </a>`
-        movieContainer.appendChild(movieBox);
-        disMovie.push(movie);
-      }
+        let movies = await this.getAllMovies();
+        console.log(movies)
+        let disMovie = [];
+        while (disMovie.length < 30 && disMovie.length < movies.length) {
+            let ranNum = Math.floor(Math.random() * movies.length);
+            let movie = movies[ranNum];
+            if (!disMovie.includes(movie)) {
+                let movieBox = document.createElement("div");
+                movieBox.setAttribute('class', 'movie')
+                movieBox.innerHTML = `<a href="movie.html?id=${movie.imdbID}" class="moviePic">
+                <img src="${movie.Poster}">
+                <p>${movie.Title}</p>
+                <p>${movie.category}</p>
+                <p>${movie.Title}</p>
+                <p>${movie.rating}</p>
+                </a>`
+                movieContainer.appendChild(movieBox);
+                disMovie.push(movie);
+            }
+        }
     }
-  }
-  
 
-  nav(){
+
+    nav() {
         let header = document.querySelector("header");
         const loggedInUser = localStorage.getItem("loggedInUser")
-        if(loggedInUser){
+        if (loggedInUser) {
             header.innerHTML = `
             <div>
                 <div></div>
@@ -58,7 +59,7 @@ class Movies {
             `
             mov.logOut();
         }
-        else{
+        else {
             header.innerHTML = `
                 <div>
                     <div></div>
@@ -75,15 +76,15 @@ class Movies {
             `
         }
     }
-    logOut(){
-    const logOutBtn = document.getElementById("logOutBtn");
+    logOut() {
+        const logOutBtn = document.getElementById("logOutBtn");
 
-    logOutBtn.addEventListener("click", function(){
-        localStorage.removeItem("loggedInUser");
-        nav();
-        window.location.href = "login.html"
-    })
-}
+        logOutBtn.addEventListener("click", function () {
+            localStorage.removeItem("loggedInUser");
+            nav();
+            window.location.href = "login.html"
+        })
+    }
 }
 
 
