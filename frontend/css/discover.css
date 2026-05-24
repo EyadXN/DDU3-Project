@@ -132,6 +132,8 @@ header div div {
   color: white;
   text-decoration: underline;
   text-decoration-color: black;
-  font-size: auto;
+}
+
+.movie {
   max-width: 360px;
 }
