@@ -967,7 +967,14 @@
       "name": "Vincent",
       "password": "luvBoba",
       "id": 1,
-      "reviews": []
+      "reviews": [
+        {
+          "Title": "Star Wars: Episode II - Attack of the Clones",
+          "imdbID": "tt0121765",
+          "rating": "5",
+          "recension": "Weird romance, almost died of cringe. "
+        }
+      ]
     },
     {
       "name": "Eyad",
@@ -989,7 +996,7 @@
         {
           "Title": "Thor: Love and Thunder",
           "imdbID": "tt10648342",
-          "rating": "9",
+          "rating": "6",
           "recension": ""
         },
         {

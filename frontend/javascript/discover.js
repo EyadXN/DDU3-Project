@@ -28,7 +28,6 @@ class Movies {
                 <img src="${movie.Poster}">
                 <p>${movie.Title}</p>
                 <p>${movie.category}</p>
-                <p>${movie.Title}</p>
                 <p>${movie.rating}</p>
                 </a>`
                 movieContainer.appendChild(movieBox);

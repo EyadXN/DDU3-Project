@@ -12,15 +12,34 @@
   <header>
     
   </header>
-
+  
+  <form id="my-form" action="">
+    <select name="category" id="category">
+      <option value="">Category</option>
+    </select>
+    <label for="">
+      overall ratings acending
+      <input type="radio" name="choices" value="1">
+    </label>
+    <label for="">
+      overall ratings decending
+      <input type="radio" name="choices" value="0">
+    </label>
+    <p>released before:</p>
+    <input class="release" type="text" name="releasedbefore">
+    <p>released after:</p>
+    <input class="release" type="text" name="releasedafter">
+    <button id="filterButton">Filter</button>
+  </form>
+  
   <div id="movie-container">
-
+    
   </div>
-
+  
   <script src="/javascript/frontend.js"></script>
   <script src="/javascript/discover.js"></script>
   
-
+  
 </body>
 
 </html>
