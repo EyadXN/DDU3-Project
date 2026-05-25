@@ -126,35 +126,64 @@ async function getCategories() {
 getCategories();
 
 
-  
-    filterForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const params = new URLSearchParams();
 
-        const category = filterForm.elements.category.value;
-        const releaseB = filterForm.elements.releasedbefore.value;
-        const releaseA = filterForm.elements.releasedafter.value;
+filterForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const params = new URLSearchParams();
 
-        if (category) {
-            params.append("category", category);
-        }
+    const category = filterForm.elements.category.value;
+    const releaseB = filterForm.elements.releasedbefore.value;
+    const releaseA = filterForm.elements.releasedafter.value;
 
-        if (releaseB) {
-            params.append("releaseB", releaseB);
-        }
-        if (releaseA) {
-            params.append("releaseA", releaseA);
-        }
+    if (category) {
+        params.append("category", category);
+    }
 
-        const queryString = params.toString();
-        try {
-            const filteredMovies = await api.filterSearch(queryString)
-            upLoadTheseMovies(filteredMovies)
-        } catch (error) {
-            console.log("nätvärkserror")
-            alert("nätvärkserror profile.js 156")
+    if (releaseB) {
+        params.append("releaseB", releaseB);
+    }
+    if (releaseA) {
+        params.append("releaseA", releaseA);
+    }
+
+    const queryString = params.toString();
+
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    let allMovies;
+    try {
+        allMovies = await api.getMovies();
+    } catch (err) {
+        console.log("Kunde inte hämta filmer");
+        return;
+    }
+
+    let userReviewedMovies = [];
+    for (let rev of user.reviews) {
+        for (let movie of allMovies) {
+            if (rev.imdbID == movie.imdbID) {
+                movie.mRev = rev.rating;
+                movie.oRev = movie.rating;
+                userReviewedMovies.push(movie);
+            }
         }
-    })
+    }
+
+    let filteredMovies = [];
+
+    for (let movie of userReviewedMovies) {
+        if (category && movie.category !== category) {
+            continue;
+        }
+        if (releaseB && Number(movie.Year) > Number(releaseB)) {
+            continue;
+        }
+        if (releaseA && Number(movie.Year) < Number(releaseA)) {
+            continue;
+        }
+        filteredMovies.push(movie);
+    }
+    upLoadTheseMovies(filteredMovies, user)
+})
 
 window.addEventListener("load", uploadMovieList);
 

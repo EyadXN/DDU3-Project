@@ -34,12 +34,13 @@ async function handler(request) {
                         if (!url.search) {
                             return new Response(JSON.stringify(movies), options);
                         }
+                        let req = await request.json;
                         let releaseB = url.searchParams.get("releaseB");
                         let releaseA = url.searchParams.get("releaseA");
                         let category = url.searchParams.get("category");
 
 
-                        let filtered = mov.filterSearch(movies, releaseB,releaseA, category)
+                        let filtered = mov.filterSearch(req, releaseB,releaseA, category)
                         return new Response(JSON.stringify(filtered), options);
                     }
 
