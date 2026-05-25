@@ -903,49 +903,6 @@
   ],
   "userList": [
     {
-      "name": "Abasin",
-      "password": "FrozenDachri",
-      "id": 0,
-      "reviews": [
-        {
-          "Title": "The Lion King",
-          "imdbID": "tt6105098",
-          "rating": "5",
-          "recension": "animerade versionen var bättre"
-        },
-        {
-          "Title": "The Original Kings of Comedy",
-          "imdbID": "tt0236388",
-          "rating": "8",
-          "recension": "Peak Comedy right here"
-        },
-        {
-          "Title": "Avengers: Infinity War",
-          "imdbID": "tt4154756",
-          "rating": "8",
-          "recension": "Peak Cinema"
-        },
-        {
-          "Title": "An Action Hero",
-          "imdbID": "tt15600222",
-          "rating": "4",
-          "recension": "below average"
-        },
-        {
-          "Title": "An Action Hero",
-          "imdbID": "tt15600222",
-          "rating": "4",
-          "recension": "below average"
-        },
-        {
-          "Title": "King Arthur: Legend of the Sword",
-          "imdbID": "tt1972591",
-          "rating": "7",
-          "recension": "mehhh."
-        }
-      ]
-    },
-    {
       "name": "Vincent",
       "password": "luvBoba",
       "id": 1,
@@ -986,8 +943,26 @@
           "imdbID": "tt3741700",
           "rating": "3",
           "recension": ""
+        },
+        {
+          "Title": "Star Wars: Episode IV - A New Hope",
+          "imdbID": "tt0076759",
+          "rating": "10",
+          "recension": "Meh.."
+        },
+        {
+          "Title": "Captain America: Civil War",
+          "imdbID": "tt3498820",
+          "rating": "5",
+          "recension": "ehh"
         }
       ]
+    },
+    {
+      "name": "Abasin",
+      "password": "stone",
+      "id": 2,
+      "reviews": []
     }
   ]
 }

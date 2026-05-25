@@ -29,6 +29,7 @@ class Movies {
                 <p>${movie.Title}</p>
                 <p>${movie.category}</p>
                 <p>${movie.rating}</p>
+                <button type="button" class="remove"></button>
                 </a>`
                 movieContainer.appendChild(movieBox);
                 disMovie.push(movie);

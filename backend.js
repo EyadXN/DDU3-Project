@@ -19,7 +19,7 @@ async function handler(request) {
     let usersUrl = "/users";
 
 
-    if (url.pathname.startsWith(moviesUrl)) {   
+    if (url.pathname.startsWith(moviesUrl)) {
 
         if (request.method == "GET") {
 
@@ -118,30 +118,48 @@ async function handler(request) {
                 }
             }
         }
-        if (request.method == "DELETE") {
+            if (request.method == "DELETE") {
+                if (request.headers.get("Content-Type") == "application/json") {
+                    let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+                    let route = new URLPattern({ pathname: `${usersUrl}/:id` });
 
+                    if (route.test(request.url)) {
 
-            let req = await request.json();
+                        let match = route.exec(request.url);
+                        let userId = match.pathname.groups.id;
+                        
+                        let updatedUsers = use.deleteUser(userId, dataBase.userList);
 
-            let review = use.deleteReview(req.id, req.review);
-
-            if (!review) {
-                return new Response(JSON.stringify("Not Found"), { status: 404 })
-            }
-            else {
-                return new Response(null, {
-                status: 204,
-                headers: options.headers
-                })
+                        if (updatedUsers == null) {
+                            return new Response(JSON.stringify("Not Found"), { status: 404 });
+                        }
             
+                        return new Response(JSON.stringify(updatedUsers), options);
+                
+                    }
+                    let req = await request.json();
+
+                    let review = use.deleteReview(req.id, req.review);
+
+                    if (!review) {
+                        return new Response(JSON.stringify("Not Found"), { status: 404 })
+                    }
+                    else {
+                        return new Response(null, {
+                            status: 204,
+                            headers: options.headers
+                        })
+
+                    }
             }
+
         }
     }
 
 
-return serveDir(request, {
-    fsRoot: "frontend"
-});
+    return serveDir(request, {
+        fsRoot: "frontend"
+    });
 }
 /*
 createNewDataBase();*/
