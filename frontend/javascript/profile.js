@@ -54,12 +54,13 @@ async function upLoadTheseMovies(movies, user) {
                 <b>${mov.Title}</b>
                 <p>${mov.Year} - ${mov.category}</p>
             </div>
-            <button class="remove">Remove</button>
+            <button type ="button" class="remove">Remove</button>
         `;
 
         movieList.appendChild(movieElement);
 
         movieElement.querySelector(".remove").addEventListener("click", async function () {
+            e.preventDefault();
             try {
                 let removeRev = await api.deleteReview(user.id, mov);
                 movieElement.remove();
@@ -79,17 +80,16 @@ async function uploadMovieList() {
         movies = await api.getMovies();
     } catch (error) {
         alert("couldn't get movies");
-        return; // Avbryt funktionen om vi inte får några filmer
+        return; 
     }
 
     for (let rev of user.reviews) {
         for (let movie of movies) {
             if (rev.imdbID == movie.imdbID) {
-                // Skapa en kopia av filmen och klistra in mRev och oRev direkt på objektet!
                 let matchedMovie = {
                     ...movie,
                     mRev: rev.rating,
-                    oRev: movie.rating.avgRating // eller bara movie.rating beroende på hur ditt JSON ser ut
+                    oRev: movie.rating.avgRating
                 };
                 myList.push(matchedMovie);
             }
@@ -97,7 +97,6 @@ async function uploadMovieList() {
     }
 
     if (myList.length !== 0) {
-        // Skicka med både listan och user in i funktionen
         await upLoadTheseMovies(myList, user);
     }
 }

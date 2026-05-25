@@ -148,9 +148,14 @@ async deleteReview(userId, review){
       if (!response.ok) {
         throw new Error("response är inte ok!")
       }
+      if (response.status === 204) {
+            return true; 
+        }
+      else{
+        return false;
+      }
 
-      const data = await response.json();
-      return data;
+
     }catch(error){
       alert("frontend Requesten gick inte igenom", error)
       return
