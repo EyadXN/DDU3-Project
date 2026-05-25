@@ -12,23 +12,23 @@ class API {
       }
       movies = await request.json();
       console.log("movies:", movies)
-      
+
     } catch (error) {
       throw new Error(error + "network error Abasin")
     }
-    
+
     return movies;
   }
   async getMovie(id) {
     let response;
     try {
       response = await fetch("/movies/" + id, {
-      headers: { "Accept": "application/json" }
+        headers: { "Accept": "application/json" }
       });
       if (!response.ok) {
         throw new Error("Kunde inte hämta filmen pågrund av Responsen")
       }
-      
+
       let movie = await response.json();
       console.log("movie", movie)
       return movie;
@@ -57,8 +57,8 @@ class API {
       }
 
       const data = await response.json();
-      return data;
       console.log("User created:", data);
+      return data;
 
     }
     catch (error) {
@@ -68,7 +68,7 @@ class API {
     }
 
   }
-  async getCategories(){
+  async getCategories() {
     let request;
     let categories;
     try {
@@ -80,32 +80,32 @@ class API {
       }
       categories = await request.json();
       console.log("categories:", categories)
-      
+
     } catch (error) {
       throw new Error(error + "network error Abasin")
     }
-    
+
     return categories;
   }
-  
-  async filterSearch(querystring){
-    try{
+
+  async filterSearch(querystring) {
+    try {
       let response = await fetch(`/movies?${querystring}`, {
-         headers: { "Accept": "application/json" }
+        headers: { "Accept": "application/json" }
       })
       if (!response.ok) throw new Error("Gick inte att filtrera");
       return await response.json();
-    }catch(error){
+    } catch (error) {
       alert("nätvärkserror" + error);
       console.log("nätvärkserror" + error)
     }
   }
-  async postReview(userId, review){
+  async postReview(userId, review) {
     let newReviewObj = {
       id: userId,
       review: review
     }
-    try{
+    try {
       const response = await fetch("/movies", {
 
         method: "POST",
@@ -122,18 +122,18 @@ class API {
 
       const data = await response.json();
       return data;
-    }catch(error){
+    } catch (error) {
       alert("frontend Requesten gick inte igenom", error)
       return
     }
-}
+  }
 
-async deleteReview(userId, review){
-  let newReviewObj = {
+  async deleteReview(userId, review) {
+    let newReviewObj = {
       id: userId,
       review: review
     }
-    try{
+    try {
       const response = await fetch("/users", {
 
         method: "DELETE",
@@ -150,11 +150,11 @@ async deleteReview(userId, review){
 
       const data = await response.json();
       return data;
-    }catch(error){
+    } catch (error) {
       alert("frontend Requesten gick inte igenom", error)
       return
     }
-}
+  }
 
 }
 let api = new API();
