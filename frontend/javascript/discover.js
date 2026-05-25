@@ -80,13 +80,62 @@ class Movies {
 
         logOutBtn.addEventListener("click", function () {
             localStorage.removeItem("loggedInUser");
-            nav();
+            mov.nav();
             window.location.href = "login.html"
+        })
+    }
+
+    filtering() {
+        const form = document.getElementById("my-form");
+
+        if (!form) {
+            console.log("Could not find #my-form on this page.")
+            return;
+        }
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const filterValues = Object.fromEntries(formData);
+
+            console.log("Your filter criteria:", filterValues);
+
+            const queryString = new URLSearchParams(filterValues).toString();
+
+            try {
+                let filteredMovies = await api.filterSearch(queryString);
+
+                let movieContainer = document.getElementById("movie-container");
+
+                movieContainer.innerHTML = "";
+
+                for (let movie of filteredMovies) {
+                    let movieBox = document.createElement("div");
+
+                    movieBox.setAttribute('class', 'movie');
+
+                    movieBox.innerHTML = `
+                    <a href="movie.html?id=${movie.imdbID}" class="moviePic">
+                    <img src="${movie.Poster}">
+                    <p>${movie.Title}</p>
+                    <p>${movie.category}</p>
+                    <p>${movie.rating}</p>
+                    </a>`;
+
+                    movieContainer.appendChild(movieBox);
+                }
+            } catch (error) {
+                throw new Error("Filtering failed:", error);
+            }
         })
     }
 }
 
 
+
+
 let mov = new Movies();
+mov.filtering();
 mov.displayMovies();
 mov.nav();

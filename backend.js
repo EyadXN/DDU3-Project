@@ -19,7 +19,7 @@ async function handler(request) {
     let usersUrl = "/users";
 
 
-    if (url.pathname.startsWith(moviesUrl)) {
+    if (url.pathname.startsWith(moviesUrl)) {   
 
         if (request.method == "GET") {
 
@@ -120,6 +120,7 @@ async function handler(request) {
         }
         if (request.method == "DELETE") {
 
+
             let req = await request.json();
 
             let review = use.deleteReview(req.id, req.review);
@@ -135,7 +136,8 @@ async function handler(request) {
             
             }
         }
-}
+    }
+
 
 return serveDir(request, {
     fsRoot: "frontend"
