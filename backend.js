@@ -17,31 +17,32 @@ async function handler(request) {
     let usersUrl = "/users";
 
     
-    if (url.pathname.startsWith(moviesUrl)) {
+        if (url.pathname.startsWith(moviesUrl)) {
 
-        if (request.method == "GET") {
+            if (request.method == "GET") {
 
-            let dataBase = JSON.parse(Deno.readTextFileSync("database.json")); 
-            let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
+                let dataBase = JSON.parse(Deno.readTextFileSync("database.json")); 
+                let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
 
-            if (request.headers.get("Accept") == "application/json"){
+                if (request.headers.get("Accept") == "application/json"){
 
-                if(url.pathname == "/movies/categories"){
-                    let categories = mov.getCategories();
-                    return new Response(JSON.stringify(categories), options)
-                }
-                if (url.pathname == moviesUrl) {
-                    if (!url.search) {
-                        return new Response(JSON.stringify(movies), options);
+                    if(url.pathname == "/movies/categories"){
+                        let categories = mov.getCategories();
+                        return new Response(JSON.stringify(categories), options)
                     }
-                    let releaseB = url.searchParams.get("releaseB");
-                    let releaseA = url.searchParams.get("releaseA");
-                    let category = url.searchParams.get("category");
+                    if (url.pathname == moviesUrl) {
+                        if (!url.search) {
+                            return new Response(JSON.stringify(movies), options);
+                        }
+                        let req = await request.json;
+                        let releaseB = url.searchParams.get("releaseB");
+                        let releaseA = url.searchParams.get("releaseA");
+                        let category = url.searchParams.get("category");
 
 
-                    let filtered = mov.filterSearch(movies, releaseB,releaseA, category)
-                    return new Response(JSON.stringify(filtered), options);
-                }
+                        let filtered = mov.filterSearch(req, releaseB,releaseA, category)
+                        return new Response(JSON.stringify(filtered), options);
+                    }
 
                 let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
 

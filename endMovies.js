@@ -85,7 +85,7 @@ class Movies {
                 }
             }
             if(releaseB){
-                if(Number(movie.Year) < Number(releaseB)){
+                if(Number(movie.Year) > Number(releaseB)){
                     continue;
                 }
             }

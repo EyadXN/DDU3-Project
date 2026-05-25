@@ -87,10 +87,18 @@ class API {
 
     return categories;
   }
+<<<<<<< HEAD
 
   async filterSearch(querystring) {
     try {
       let response = await fetch(`/movies?${querystring}`, {
+=======
+  
+  async filterSearch(querystring, userReviewedMovies){
+    try{
+      let response = await fetch(`/movies?${querystring}`, {
+        method: "GET",
+>>>>>>> 1b8544583199c548b93eafa1d4434f4d7cc044be
         headers: { "Accept": "application/json" }
       })
       if (!response.ok) throw new Error("Gick inte att filtrera");
