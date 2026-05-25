@@ -114,7 +114,7 @@ main {
     display: flex;
     flex-direction: column;
     background-color: black;
-    padding: 20px;
+    padding: 18px;
     border-radius: 20px;
     min-height: 375px;
 }
@@ -131,7 +131,7 @@ main {
 }
 
 #signupBox form input {
-    padding: 12px;
+    padding: 11px;
 }
 
 #loginBox div, #signupBox div {
