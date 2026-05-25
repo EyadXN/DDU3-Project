@@ -148,7 +148,8 @@ getCategories();
 
         const queryString = params.toString();
         try {
-            const filteredProducts = await api.filterSearch(queryString)
+            const filteredMovies = await api.filterSearch(queryString)
+            upLoadTheseMovies(filteredMovies)
         } catch (error) {
             console.log("nätvärkserror")
             alert("nätvärkserror profile.js 156")
