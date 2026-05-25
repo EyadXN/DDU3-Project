@@ -1,4 +1,4 @@
-// Deno text: deno run --allow-net --allow-read --allow-write --watch backend.js
+
 import { mov } from "./endMovies.js"
 import { use } from "./endUsers.js"
 import { serveDir } from "jsr:@std/http/file-server"

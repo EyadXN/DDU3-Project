@@ -7,7 +7,7 @@ class Movies {
             return movies;
 
         } catch (error) {
-            console.error("Det faktiska felet i frontend:", error); // <-- Lägg till denna för att se krocken i konsolen!
+            console.error("Det faktiska felet i frontend:", error); 
             throw new Error(`Network error Abasin: ${error.message}`);
         }
     }
