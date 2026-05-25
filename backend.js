@@ -21,6 +21,31 @@ async function handler(request) {
 
     if (url.pathname.startsWith(moviesUrl)) {
 
+        if (url.pathname == "/login" && request.method == "POST") {
+            let user = await request.json();
+
+            if (user.name == "Abasin" && user.password == "stone") {
+
+                let options = {
+                    headers: {
+                        "Content-Type": "application/json",
+
+        
+                        "Set-Cookie": "session_id=super-secret-value; Max-Age=86400; Path=/;"
+                    }
+                };
+
+
+                return new Response(JSON.stringify("Welcome!"), options);
+            }
+
+            return new Response(JSON.stringify("Unauthorized"), {
+                status: 401,
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+
+
         if (request.method == "GET") {
 
             let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
@@ -118,39 +143,39 @@ async function handler(request) {
                 }
             }
         }
-            if (request.method == "DELETE") {
-                if (request.headers.get("Content-Type") == "application/json") {
-                    let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
-                    let route = new URLPattern({ pathname: `${usersUrl}/:id` });
+        if (request.method == "DELETE") {
+            if (request.headers.get("Content-Type") == "application/json") {
+                let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+                let route = new URLPattern({ pathname: `${usersUrl}/:id` });
 
-                    if (route.test(request.url)) {
+                if (route.test(request.url)) {
 
-                        let match = route.exec(request.url);
-                        let userId = match.pathname.groups.id;
-                        
-                        let updatedUsers = use.deleteUser(userId, dataBase.userList);
+                    let match = route.exec(request.url);
+                    let userId = match.pathname.groups.id;
 
-                        if (updatedUsers == null) {
-                            return new Response(JSON.stringify("Not Found"), { status: 404 });
-                        }
-            
-                        return new Response(JSON.stringify(updatedUsers), options);
-                
+                    let updatedUsers = use.deleteUser(userId, dataBase.userList);
+
+                    if (updatedUsers == null) {
+                        return new Response(JSON.stringify("Not Found"), { status: 404 });
                     }
-                    let req = await request.json();
 
-                    let review = use.deleteReview(req.id, req.review);
+                    return new Response(JSON.stringify(updatedUsers), options);
 
-                    if (!review) {
-                        return new Response(JSON.stringify("Not Found"), { status: 404 })
-                    }
-                    else {
-                        return new Response(null, {
-                            status: 204,
-                            headers: options.headers
-                        })
+                }
+                let req = await request.json();
 
-                    }
+                let review = use.deleteReview(req.id, req.review);
+
+                if (!review) {
+                    return new Response(JSON.stringify("Not Found"), { status: 404 })
+                }
+                else {
+                    return new Response(null, {
+                        status: 204,
+                        headers: options.headers
+                    })
+
+                }
             }
 
         }

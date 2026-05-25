@@ -955,6 +955,18 @@
           "imdbID": "tt3498820",
           "rating": "5",
           "recension": "ehh"
+        },
+        {
+          "Title": "Pirates of the Caribbean: Dead Man's Chest",
+          "imdbID": "tt0383574",
+          "rating": "10",
+          "recension": "Peak movie"
+        },
+        {
+          "Title": "World War Z",
+          "imdbID": "tt0816711",
+          "rating": "1",
+          "recension": "propaganda merchant"
         }
       ]
     },
