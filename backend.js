@@ -16,33 +16,34 @@ async function handler(request) {
 
     let usersUrl = "/users";
 
-    
-        if (url.pathname.startsWith(moviesUrl)) {
 
-            if (request.method == "GET") {
+    if (url.pathname.startsWith(moviesUrl)) {
 
-                let dataBase = JSON.parse(Deno.readTextFileSync("database.json")); 
-                let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
+        if (request.method == "GET") {
 
-                if (request.headers.get("Accept") == "application/json"){
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+            let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
 
-                    if(url.pathname == "/movies/categories"){
-                        let categories = mov.getCategories();
-                        return new Response(JSON.stringify(categories), options)
+            if (request.headers.get("Accept") == "application/json") {
+
+                if (url.pathname == "/movies/categories") {
+                    let categories = mov.getCategories();
+                    return new Response(JSON.stringify(categories), options)
+                }
+                if (url.pathname == moviesUrl) {
+                    if (!url.search) {
+                        return new Response(JSON.stringify(movies), options);
                     }
-                    if (url.pathname == moviesUrl) {
-                        if (!url.search) {
-                            return new Response(JSON.stringify(movies), options);
-                        }
-                        let req = await request.json;
-                        let releaseB = url.searchParams.get("releaseB");
-                        let releaseA = url.searchParams.get("releaseA");
-                        let category = url.searchParams.get("category");
+
+                    let releasedbefore = url.searchParams.get("releasedbefore");
+                    let releasedafter = url.searchParams.get("releasedafter");
+                    let category = url.searchParams.get("category");
+                    let choices = url.searchParams.get("choices")
 
 
-                        let filtered = mov.filterSearch(req, releaseB,releaseA, category)
-                        return new Response(JSON.stringify(filtered), options);
-                    }
+                    let filtered = mov.filterSearch(movies, releasedbefore, releasedafter, category, choices);
+                    return new Response(JSON.stringify(filtered), options);
+                }
 
                 let route = new URLPattern({ pathname: `${moviesUrl}/:id` });
 
@@ -66,16 +67,16 @@ async function handler(request) {
                 let req = await request.json();
 
                 let addedReview = mov.postReview(req);
-                if(addedReview){
+                if (addedReview) {
                     return new Response(JSON.stringify(null), options)
                 }
-                 return new Response(JSON.stringify("Not Found"), { status: 404 })
+                return new Response(JSON.stringify("Not Found"), { status: 404 })
             }
             else {
                 return new Response(JSON.stringify("Not Acceptable"), { status: 406 })
-            }   
+            }
         }
-        
+
     }
     if (url.pathname.startsWith(usersUrl)) {
 
@@ -97,7 +98,7 @@ async function handler(request) {
                     }
                     return new Response(JSON.stringify(user), options)
                 }
-                else{
+                else {
                     return new Response(JSON.stringify(dataBase.userList), options)
                 }
             }
@@ -111,16 +112,16 @@ async function handler(request) {
                 if (use.userControl(req)) {
                     let newUsers = use.postUser(req);
                     return new Response(JSON.stringify(newUsers), options)
-                }else {
+                } else {
                     return new Response(JSON.stringify("Bad Request: Felaktig data"), { status: 400, headers: options.headers });
                 }
             }
         }
-       if (request.method == "DELETE") {
+        if (request.method == "DELETE") {
             let route = new URLPattern({ pathname: `${usersUrl}/:id` });
             if (route.test(request.url)) {
                 let match = route.exec(request.url);
-    
+
                 let review = use.deleteReview(match.pathname.groups.id);
 
                 if (!review) {

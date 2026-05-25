@@ -1,100 +1,110 @@
 class Movies {
 
-    getMovie(id, movies){
-        console.log("apiMovies: "+ movies)
-        for(let movie of movies){
-            if(movie.imdbID == id){
+    getMovie(id, movies) {
+        console.log("apiMovies: " + movies)
+        for (let movie of movies) {
+            if (movie.imdbID == id) {
                 return movie;
             }
         }
-       return null 
+        return null
     }
-    
-    getStartRatings(movies, users){
+
+    getStartRatings(movies, users) {
         for (let movie of movies) {
-        let totalRating = 0;
-        let count = 0;
+            let totalRating = 0;
+            let count = 0;
 
-        for (let user of users) {
-            
-            
-            for (let rev of user.reviews) {
-                
-                if (rev.imdbID == movie.imdbID) {
+            for (let user of users) {
 
-                    totalRating += Number(rev.rating);
-                    count++;
+
+                for (let rev of user.reviews) {
+
+                    if (rev.imdbID == movie.imdbID) {
+
+                        totalRating += Number(rev.rating);
+                        count++;
+                    }
                 }
+            }
+
+
+            if (count > 0) {
+                movie.rating = Math.floor(totalRating / count);
+            } else {
+                movie.rating = Math.floor(Math.random() * 10);
             }
         }
 
-        
-        if (count > 0) {
-            movie.rating = Math.floor(totalRating / count);
-        } else {
-            movie.rating = Math.floor(Math.random() * 10); 
-        }
+        return movies;
     }
 
-    return movies;
-    }
-
-    postReview(req){
+    postReview(req) {
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
         let review = req.review;
         let user;
         let reviewLength;
-        for(user of data.userList){
-            if(req.id == user.id){
+        for (user of data.userList) {
+            if (req.id == user.id) {
                 reviewLength = user.reviews.length;
                 user.reviews.push(review);
                 break;
             }
         }
-        
-        Deno.writeTextFileSync("./database.json", JSON.stringify(data,null, 2));
-        if(user.reviews.length === reviewLength){
+
+        Deno.writeTextFileSync("./database.json", JSON.stringify(data, null, 2));
+        if (user.reviews.length === reviewLength) {
             return false
         }
         return true;
     }
 
-    getCategories(){
+    getCategories() {
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
         let categories = [];
-        for(let movie of data.movieList){
-            if(categories.includes(movie.category)){
+        for (let movie of data.movieList) {
+            if (categories.includes(movie.category)) {
                 continue;
             }
-            else{
+            else {
                 categories.push(movie.category);
             }
         }
         return categories;
     }
 
-    filterSearch(movies, releaseB,releaseA, category){
+    filterSearch(movies, releasedbefore, releasedafter, category, choices) {
         let firstFilter = [];
 
-        for(let movie of movies){
-             if(category){
-                if(movie.category !== category){
+        for (let movie of movies) {
+            if (category) {
+                if (movie.category !== category) {
                     continue;
                 }
             }
-            if(releaseB){
-                if(Number(movie.Year) > Number(releaseB)){
+            if (releasedbefore) {
+                if (Number(movie.Year) > Number(releasedbefore)) {
                     continue;
                 }
             }
-            if(releaseA){
-                if(Number(movie.Year) < Number(releaseA)){
+            if (releasedafter) {
+                if (Number(movie.Year) < Number(releasedafter)) {
                     continue;
                 }
             }
             firstFilter.push(movie);
+        }
+
+        if (choices === "1") {
+            firstFilter.sort(function (a, b) {
+                return Number(a.rating) - Number(b.rating);
+            });
+        } else if (choices === "0") {
+            firstFilter.sort(function (a, b) {
+                return Number(b.rating) - Number(a.rating);
+            });
         }
 
         return firstFilter;

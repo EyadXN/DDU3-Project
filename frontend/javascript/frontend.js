@@ -87,22 +87,64 @@ class API {
 
     return categories;
   }
-<<<<<<< HEAD
 
-  async filterSearch(querystring) {
+  async filterSearch(querystring, userReviewedMovies) {
     try {
       let response = await fetch(`/movies?${querystring}`, {
-=======
-  
-  async filterSearch(querystring, userReviewedMovies){
-    try{
-      let response = await fetch(`/movies?${querystring}`, {
         method: "GET",
->>>>>>> 1b8544583199c548b93eafa1d4434f4d7cc044be
         headers: { "Accept": "application/json" }
       })
       if (!response.ok) throw new Error("Gick inte att filtrera");
-      return await response.json();
+      let movies = await response.json();
+
+      const params = new URLSearchParams(querystring);
+      const category = params.get("category");
+      const choices = params.get("choices");
+      const releasedbefore = params.get("releasedbefore");
+      const releasedafter = params.get("releasedafter");
+
+      if (category && category !== "") {
+        let temp = [];
+        for (let m of movies) {
+          if (m.category === category) {
+            temp.push(m);
+          }
+        }
+        movies = temp;
+      }
+
+      if (releasedbefore && releasedbefore !== "") {
+        let temp = [];
+        for (let m of movies) {
+          if (parseInt(m.Year) <= parseInt(releasedbefore)) {
+            temp.push(m);
+          }
+        }
+        movies = temp;
+      }
+
+      if (releasedafter && releasedafter !== "") {
+        let temp = [];
+        for (let m of movies) {
+          if (parseInt(m.Year) >= parseInt(releasedafter)) {
+            temp.push(m);
+          }
+        }
+        movies = temp;
+      }
+
+      if (choices === "1") {
+        movies.sort(function (a, b) {
+          return parseFloat(a.rating) - parseFloat(b.rating);
+        });
+      } else if (choices === "0") {
+        movies.sort(function (a, b) {
+          return parseFloat(b.rating) - parseFloat(a.rating);
+        });
+      }
+
+      return movies;
+
     } catch (error) {
       alert("nätvärkserror" + error);
       console.log("nätvärkserror" + error)
