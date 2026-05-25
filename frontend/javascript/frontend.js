@@ -68,7 +68,38 @@ class API {
     }
 
   }
-
+  async getCategories(){
+    let request;
+    let categories;
+    try {
+      request = await fetch("/movies/categories", {
+        headers: { "Accept": "application/json" }
+      });
+      if (!request.ok) {
+        throw new Error("movies response är inte ok! Vincent")
+      }
+      categories = await request.json();
+      console.log("categories:", categories)
+      
+    } catch (error) {
+      throw new Error(error + "network error Abasin")
+    }
+    
+    return categories;
+  }
+  
+  async filterSearch(querystring){
+    try{
+      let response = await fetch(`/movies?${querystring}`, {
+         headers: { "Accept": "application/json" }
+      })
+      if (!response.ok) throw new Error("Gick inte att filtrera");
+      return await response.json();
+    }catch(error){
+      alert("nätvärkserror" + error);
+      console.log("nätvärkserror" + error)
+    }
+  }
   async postReview(userId, review){
     let newReviewObj = {
       id: userId,

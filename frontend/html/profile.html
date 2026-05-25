@@ -16,16 +16,30 @@
             <div id="profileImg"></div>
             <p id="welcomeMessage"></p>
         </div>
+        <div id="myRating">
+            <div></div>
+            <p>My Rating</p>
+        </div>
+        <div id="oRating">
+            <div></div>
+            <p>overall Rating</p>
+        </div>
+
         <div id="container">
             <div id="filter">
                 <form id="my-form" action="">
                     <select name="category" id="category">
                         <option value="">Category</option>
                     </select>
-                    <P>Max Rating:</P>
-                    <input class="rating" type="text" name="maxRating">
-                    <P>Min Rating:</P>
-                    <input class="rating" type="text" name="minRating">
+                    <div>
+                        <P>released before:</P>
+                        <input class="release" type="text" name="releasedbefore">
+                    </div>
+                    <div>
+                        <P>released after:</P>
+                        <input class="release" type="text" name="releasedafter">
+                    </div>
+                    
                     <button id="filterButton">Filter</button>
                 </form>
             </div>

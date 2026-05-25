@@ -146,12 +146,13 @@ main {
   width: 400px;
   height: 800px;
   border-right: #780606 solid 1px;
+  padding-right: 30px;
 }
 #movieList{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 50px;
   border-radius: 10px;
   padding-top: 100px;
   position: relative;
@@ -159,7 +160,6 @@ main {
   align-content: flex-start;
 }
 #movieList h2{
-  position: absolute;
   top: 10px;
   color: rgb(167, 160, 160)
 
@@ -233,6 +233,31 @@ main {
   right: 0;;
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
+}
+
+#myRating, #oRating{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: rgb(167, 160, 160);
+  margin-left: 1200px;
+}
+#myRating div, #oRating div{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  
+}
+#myRating div{
+  background-color: #780606;
+}
+#oRating div{
+  background-color: rgb(214, 163, 22);
+}
+#my-form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 

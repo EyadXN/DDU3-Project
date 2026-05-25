@@ -21,6 +21,7 @@ class Movies {
             for (let rev of user.reviews) {
                 
                 if (rev.imdbID == movie.imdbID) {
+
                     totalRating += Number(rev.rating);
                     count++;
                 }
@@ -29,7 +30,7 @@ class Movies {
 
         
         if (count > 0) {
-            movie.rating = totalRating / count;
+            movie.rating = Math.floor(totalRating / count);
         } else {
             movie.rating = Math.floor(Math.random() * 10); 
         }
@@ -37,8 +38,6 @@ class Movies {
 
     return movies;
     }
-
-    
 
     postReview(req){
         let data = Deno.readTextFileSync("database.json");
@@ -59,6 +58,46 @@ class Movies {
             return false
         }
         return true;
+    }
+
+    getCategories(){
+        let data = Deno.readTextFileSync("database.json");
+        data = JSON.parse(data);
+        let categories = [];
+        for(let movie of data.movieList){
+            if(categories.includes(movie.category)){
+                continue;
+            }
+            else{
+                categories.push(movie.category);
+            }
+        }
+        return categories;
+    }
+
+    filterSearch(movies, releaseB,releaseA, category){
+        let firstFilter = [];
+
+        for(let movie of movies){
+             if(category){
+                if(movie.category !== category){
+                    continue;
+                }
+            }
+            if(releaseB){
+                if(Number(movie.Year) < Number(releaseB)){
+                    continue;
+                }
+            }
+            if(releaseA){
+                if(Number(movie.Year) < Number(releaseA)){
+                    continue;
+                }
+            }
+            firstFilter.push(movie);
+        }
+
+        return firstFilter;
     }
 
 }
