@@ -30,7 +30,7 @@ async function handler(request) {
                     headers: {
                         "Content-Type": "application/json",
 
-        
+
                         "Set-Cookie": "session_id=super-secret-value; Max-Age=86400; Path=/;"
                     }
                 };
@@ -61,13 +61,15 @@ async function handler(request) {
                     if (!url.search) {
                         return new Response(JSON.stringify(movies), options);
                     }
-                    let req = await request.json;
-                    let releaseB = url.searchParams.get("releaseB");
-                    let releaseA = url.searchParams.get("releaseA");
+
+                    let releasedbefore = url.searchParams.get("releasedbefore");
+                    let releasedafter = url.searchParams.get("releasedafter");
                     let category = url.searchParams.get("category");
+                    let choices = url.searchParams.get("choices");
 
 
-                    let filtered = mov.filterSearch(req, releaseB, releaseA, category)
+
+                    let filtered = mov.filterSearch(movies, releasedbefore, releasedafter, category, choices)
                     return new Response(JSON.stringify(filtered), options);
                 }
 

@@ -39,23 +39,23 @@ class API {
     }
 
   }
-  
+
   async deleteAccount(userId) {
     try {
-        let response = await fetch(`/users/${userId}`, {
-            method: "DELETE",
-            headers: { 
-                "Content-Type": "application/json",
-                "Accept": "application/json" 
-            }
-        });
-        if (!response.ok) throw new Error("Gick inte att ta bort kontot");
-        return await response.json();
+      let response = await fetch(`/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      });
+      if (!response.ok) throw new Error("Gick inte att ta bort kontot");
+      return await response.json();
     } catch (error) {
-        console.log("Nätverksfel vid radering av konto:", error);
-        throw error;
+      console.log("Nätverksfel vid radering av konto:", error);
+      throw error;
     }
-}
+  }
   async postUser(newUser) {
     try {
 
@@ -215,14 +215,14 @@ class API {
         throw new Error("response är inte ok!")
       }
       if (response.status === 204) {
-            return true; 
-        }
-      else{
+        return true;
+      }
+      else {
         return false;
       }
 
 
-    }catch(error){
+    } catch (error) {
       alert("frontend Requesten gick inte igenom", error)
       return
     }
