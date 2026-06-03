@@ -32,15 +32,20 @@ class Users {
         for (let user of data.userList) {
             if (Number(user.id) === targetUserId) {
                 const innanRadering = user.reviews.length;
+                let sparadeReviews = [];
 
-
-                user.reviews = user.reviews.filter(rev => rev.imdbID !== review.imdbID);
+                for(let rev of user.reviews){
+                    if(rev.imdb !== review.imdbID){
+                        sparadeReviews.push(rev);
+                    }
+                }
 
                 
                 
-                if (user.reviews.length < innanRadering) {
+                if (sparadeReviews.length < innanRadering) {
                     bolean = true;
                 }
+                user.reviews = sparadeReviews;
             }
         }
 
@@ -49,36 +54,6 @@ class Users {
         }
 
         return bolean;
-    }
-
-    deleteUser(id, userList) {
-        let targetId = Number(id);
-
-        let hittad = false;
-
-        
-        for (let user of userList) {
-           
-            if (Number(user.id) === targetId) {
-                hittad = true; 
-                break;         
-            }
-        }
-
-        if (hittad === false) {
-            return null;
-        }
-
-       
-        let data = JSON.parse(Deno.readTextFileSync("database.json"));
-
-       
-        data.userList = data.userList.filter(user => Number(user.id) !== targetId);
-
-        
-        Deno.writeTextFileSync("./database.json", JSON.stringify(data, null, 2));
-
-        return data.userList;
     }
 }
 

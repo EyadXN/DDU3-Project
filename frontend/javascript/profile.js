@@ -25,7 +25,6 @@ function nav() {
                         <li><a id="profile" href="start.html"></a></li>
                         <li><a href="discover.html">DISCOVER</a></li>
                         <button id= "logOutBtn">Log out</button>
-                        <button id = "deleteAcc">Delete account</button>
                     </ul>
                 </nav>
             `;
@@ -33,25 +32,6 @@ function nav() {
     welcomeTitle.innerHTML = `
             <div>Welcome ${loggedInUser.name}!</div>
             `;
-    let deleteAccBtn = document.getElementById("deleteAcc");
-    if (deleteAccBtn) {
-        deleteAccBtn.addEventListener("click", async function () {
-            let bekräfta = confirm("Är du säker på att du vill ta bort ditt konto permanent?");
-            if (bekräfta) {
-                try {
-                    console.log("loggedInUser.id" + loggedInUser.id);
-                    await api.deleteAccount(loggedInUser.id);
-                    
-            
-                    localStorage.removeItem("loggedInUser");
-                    window.location.href = "login.html";
-                } catch (error) {
-                    alert("Kunde inte ta bort kontot");
-                    console.log(error);
-                }
-            }
-        });
-    }
 
     logOut();
 
