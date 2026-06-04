@@ -1,14 +1,12 @@
-
-
-        class movie {
-            constructor(){
-                this.chosenRating = 0;
-            }
-            nav(){
-                let header = document.querySelector("header");
-                const loggedInUser = localStorage.getItem("loggedInUser")
-                if(loggedInUser){
-                    header.innerHTML = `
+class movie {
+    constructor() {
+        this.chosenRating = 0;
+    }
+    nav() {
+        let header = document.querySelector("header");
+        const loggedInUser = document.cookie.includes("user_id=");
+        if (loggedInUser) {
+            header.innerHTML = `
                     <div>
                         <div></div>
                         <div></div>
@@ -23,10 +21,10 @@
                             </ul>
                         </nav>
                     `
-                    this.logOut();
-                }
-                else{
-                    header.innerHTML = `
+            this.logOut();
+        }
+        else {
+            header.innerHTML = `
                     <div>
                             <div></div>
                             <div></div>
@@ -40,20 +38,21 @@
                             </ul>
                         </nav>
                     `
-                }
-            }
-
-            logOut(){
-            const logOutBtn = document.getElementById("logOutBtn");
-            logOutBtn.addEventListener("click", () =>{
-                localStorage.removeItem("loggedInUser");
-                this.nav();
-                window.location.href = "login.html"
-            })
         }
-            createMovie(movie) {
-                let movieDiv = document.getElementById("movie");
-                movieDiv.innerHTML = `
+    }
+
+    async logOut() {
+        try {
+            await api.logOutUser();
+            nav();
+            window.location.href = "login.html"
+        } catch (error) {
+            console.log("logout Failed" + error)
+        }
+    }
+    createMovie(movie) {
+        let movieDiv = document.getElementById("movie");
+        movieDiv.innerHTML = `
                     <div id="left">
                         <img src=${movie.Poster} alt="#">
                     </div>
@@ -95,107 +94,118 @@
                     </style>
                         `;
 
-            }
-            setupStars(){
-                let stars = document.querySelectorAll(".star");
-                let ratingTxt = document.getElementById("rating-text")
+    }
+    setupStars() {
+        let stars = document.querySelectorAll(".star");
+        let ratingTxt = document.getElementById("rating-text")
 
-                for(let star of stars){
-                    star.addEventListener("click", ()=>{
-                        
-                        this.chosenRating = star.getAttribute("data-value");
-                        ratingTxt.textContent = this.chosenRating;
+        for (let star of stars) {
+            star.addEventListener("click", () => {
 
-                        for(let s of stars){
-                            const starValue = s.getAttribute("data-value");
-                            if(parseInt(starValue) <= this.chosenRating){
-                                s.classList.add("selected");
-                            }
-                            else{
-                                s.classList.remove("selected");
-                            }
-                        }
-                
-                    })
+                this.chosenRating = star.getAttribute("data-value");
+                ratingTxt.textContent = this.chosenRating;
+
+                for (let s of stars) {
+                    const starValue = s.getAttribute("data-value");
+                    if (parseInt(starValue) <= this.chosenRating) {
+                        s.classList.add("selected");
+                    }
+                    else {
+                        s.classList.remove("selected");
+                    }
                 }
+
+            })
+        }
+        return
+    }
+
+    setupPostReview() {
+        const postBtn = document.getElementById("post-review-btn");
+        const reviewTextArea = document.getElementById("review-text");
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        postBtn.addEventListener("click", async function () {
+            const reviewComment = reviewTextArea.value;
+            let movieDiv = document.getElementById("movie");
+
+            if (this.chosenRating === 0) {
+                alert("du behöver välja en rating")
                 return
             }
 
-            setupPostReview() {
-                const postBtn = document.getElementById("post-review-btn");
-                const reviewTextArea = document.getElementById("review-text");
-                const params = new URLSearchParams(window.location.search);
-                const id = params.get("id");
-
-                postBtn.addEventListener("click", async() =>{
-                    const reviewComment = reviewTextArea.value;
-                    let movieDiv = document.getElementById("movie");
-
-                    if(this.chosenRating === 0){
-                        alert("du behöver välja en rating")
-                        return
-                    }
-
-                    const loggedInUser = localStorage.getItem("loggedInUser")
-
-                    if(!loggedInUser){
-                        alert("du behöver logga in inan du kan ranka filmer")
-                        window.location.href = "../html/login.html"
-                        return
-                    }
-
-                    const user = JSON.parse(loggedInUser);
-                    let movie;
-
-                    try{
-                        movie = await api.getMovie(id);
-                    }catch(error){
-                        movieDiv.innerHTML = "<h3>Couldn't post the movie...</h3>";
-                        console.log("försöke igen B")
-                    }
-                
-                    const review = {
-                        Title: movie.Title,
-                        imdbID: movie.imdbID,
-                        rating: this.chosenRating,
-                        recension: reviewComment
-                    }
-
-                    try{
-                        let postrev = await api.postReview(user.id, review);
-                        window.location.href = "../html/discover.html";
-                        alert("Du har postat en recension!!")
-                        return
-                    }catch(error){
-                        alert("couldn't post review because api.posetReview failed somehow again....")
-                    }
-                })
-
+            let userId = null;
+            let cookies = document.cookie.split(";");
+            for (let cookie of cookies) {
+                let i = 0;
+                while (cookie[i] === " ") {
+                    i++;
+                }
+                cookie = cookie.slice(i);
+                if (cookie.slice(0, 8) === "user_id=") {
+                    userId = cookie.slice(8);
+                }
             }
 
-            async upLoadProduct() {
-                const params = new URLSearchParams(window.location.search);
-                const id = params.get("id");
-                console.log("id" + id)
-                let movieDiv = document.getElementById("movie");
-                let movie;
-                try {
-                    console.log("hallå")
-                    movie = await api.getMovie(id);
-                    console.log("movie:" + movie)
-                    this.createMovie(movie);
-                    this.setupStars();
-                    this.setupPostReview();
-                }
-                catch (error) {
-                    movieDiv.innerHTML = "<h3>Couldn't find the movie...</h3>";
-                    console.log("försöke igen B")
-                }
-
-
+            if (!userId) {
+                alert("du behöver logga in inan du kan ranka filmer")
+                window.location.href = "../html/login.html"
+                return
             }
+
+            const user = {id: userId};
+            let movie;
+
+            try {
+                movie = await api.getMovie(id);
+            } catch (error) {
+                movieDiv.innerHTML = "<h3>Couldn't post the movie...</h3>";
+                console.log("försöke igen B")
+            }
+
+            const review = {
+                Title: movie.Title,
+                imdbID: movie.imdbID,
+                rating: this.chosenRating,
+                recension: reviewComment
+            }
+
+            try {
+                let postrev = await api.postReview(user.id, review);
+                window.location.href = "../html/discover.html";
+                alert("Du har postat en recension!!")
+                return
+            } catch (error) {
+                alert("couldn't post review because api.posetReview failed somehow again....")
+            }
+        })
+
+    }
+
+    async upLoadProduct() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        console.log("id" + id)
+        let movieDiv = document.getElementById("movie");
+        let movie;
+        try {
+            console.log("hallå")
+            movie = await api.getMovie(id);
+            console.log("movie:" + movie)
+            this.createMovie(movie);
+            this.setupStars();
+            this.setupPostReview();
         }
-        let spec = new movie();
-        spec.upLoadProduct();
+        catch (error) {
+            movieDiv.innerHTML = "<h3>Couldn't find the movie...</h3>";
+            console.log("försöke igen B")
+        }
 
-        spec.nav();
+
+    }
+}
+let spec = new movie();
+spec.upLoadProduct();
+
+spec.nav();

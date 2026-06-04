@@ -56,6 +56,7 @@ class API {
       throw error;
     }
   }
+
   async postUser(newUser) {
     try {
 
@@ -84,6 +85,38 @@ class API {
 
     }
 
+  }
+
+  async loginUser(credentials) {
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(credentials)
+      })
+      return response.ok
+    }catch(error){
+      throw new Error("network error")
+    }
+  }
+
+  async logOutUser(){
+    try{
+      const response = await fetch("/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      if(!response.ok){
+        throw new Error("requesten gick inte igenom för logout");
+      }
+      return response.ok
+    }catch(error){
+      throw new Error("networks error for logout Request")
+    }
   }
   async getCategories() {
     let request;

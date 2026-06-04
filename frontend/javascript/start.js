@@ -187,7 +187,7 @@ function createMovieList(){
 createMovieList();
 function nav(){
         let header = document.querySelector("header");
-        const loggedInUser = localStorage.getItem("loggedInUser")
+        const loggedInUser = document.cookie.includes("user_id=");
         if(loggedInUser){
             header.innerHTML = `
             <div>
@@ -228,10 +228,14 @@ nav();
 function logOut(){
     const logOutBtn = document.getElementById("logOutBtn");
 
-    logOutBtn.addEventListener("click", function(){
-        localStorage.removeItem("loggedInUser");
-        nav();
-        window.location.href = "login.html"
+    logOutBtn.addEventListener("click", async function(){
+        try{
+            await api.logOutUser();
+            nav();
+            window.location.href = "login.html"
+        }catch(error){
+            console.log("logout Failed" + error)
+        }
     })
 }
 logOut();

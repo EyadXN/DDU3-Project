@@ -7,7 +7,7 @@ class Movies {
             return movies;
 
         } catch (error) {
-            console.error("Det faktiska felet i frontend:", error); 
+            console.error("Det faktiska felet i frontend:", error);
             throw new Error(`Network error Abasin: ${error.message}`);
         }
     }
@@ -40,7 +40,7 @@ class Movies {
 
     nav() {
         let header = document.querySelector("header");
-        const loggedInUser = localStorage.getItem("loggedInUser")
+        const loggedInUser = document.cookie.includes("user_id=");
         if (loggedInUser) {
             header.innerHTML = `
             <div>
@@ -79,10 +79,14 @@ class Movies {
     logOut() {
         const logOutBtn = document.getElementById("logOutBtn");
 
-        logOutBtn.addEventListener("click", function () {
-            localStorage.removeItem("loggedInUser");
-            mov.nav();
-            window.location.href = "login.html"
+        logOutBtn.addEventListener("click", async function () {
+            try {
+                await api.logOutUser();
+                nav();
+                window.location.href = "login.html"
+            } catch (error) {
+                console.log("logout Failed" + error)
+            }
         })
     }
 

@@ -1,15 +1,20 @@
 function logOut(){
     const logOutBtn = document.getElementById("logOutBtn");
 
-    logOutBtn.addEventListener("click", function(){
-        localStorage.removeItem("loggedInUser");
-        nav();
-        window.location.href = "login.html"
+    logOutBtn.addEventListener("click", async function(){
+        try{
+            await api.logOutUser();
+            nav();
+            window.location.href = "login.html"
+        }catch(error){
+            console.log("logout Failed" + error)
+        }
+        
     })
 }
 function nav(){
         let header = document.querySelector("header");
-        const loggedInUser = localStorage.getItem("loggedInUser")
+        const loggedInUser = document.cookie.includes("user_id=");
         if(loggedInUser){
             header.innerHTML = `
             <div>
@@ -54,12 +59,10 @@ nav();
 const signUpButton = document.getElementById("signUpSubmit");
 const loginButton = document.getElementById("loginSubmit");
 
-signUpButton.addEventListener("click", async () => {
+signUpButton.addEventListener("click", async function() {
 
     const username = document.getElementById("signUpUsernameInput").value;
-
     const password = document.getElementById("signUpPasswordInput").value;
-
     const passwordConfirm = document.getElementById("signUpPasswordInputconfirm").value;
 
     const newUser = {
@@ -71,14 +74,10 @@ signUpButton.addEventListener("click", async () => {
 
     if (passwordConfirm === password) {
         try {
-
             const data = await api.postUser(newUser);
-
             console.log("User created:", data[data.length - 1]);
-
         }
         catch (error) {
-
             console.log("Error:", error);   
 
         } 
@@ -88,63 +87,27 @@ signUpButton.addEventListener("click", async () => {
     }
 });
 
-loginButton.addEventListener("click", async () => {
+loginButton.addEventListener("click", async function() {
+    const username = document.getElementById("loginUsernameInput").value;
+    const password = document.getElementById("loginPasswordInput").value;
 
-    const username =
-        document.getElementById("loginUsernameInput").value;
-
-    const password =
-        document.getElementById("loginPasswordInput").value;
+    const credentials = {
+        name: username,
+        password: password
+    };
 
     try {
-
-        const response = await fetch(
-            "/users",
-            {
-                method: "GET",
-
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-        );
-
-        const users = await response.json();
-
-        let foundUser = false;
-        let user;
-        for(user of users){
-            if(user.name === username && user.password === password){
-                foundUser = true;
-                break
-            } 
-        }
-
-        if (foundUser) {
-
-            console.log("Login successful");
-
-            console.log(foundUser);
-
-            localStorage.setItem(
-                "loggedInUser",
-                JSON.stringify(user)
-            );
-            window.location.href = "../html/discover.html"
-
-        }
-        else {
-
-            console.log("Wrong username or password");
-            alert("Couldn't find user")
-
+        const responseOk = await api.loginUser(credentials);
+        if(responseOk){
+            alert("logged in succesfully")
+            window.location.href = "../html/discover.html";
+        }else{
+            alert("Couldn't find user");
         }
 
     }
     catch (error) {
-
-        console.log("Request failed, netword error:", error);
-
+        console.log("Request failed, network error:", error);
     }
 
 });

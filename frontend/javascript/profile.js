@@ -1,16 +1,48 @@
+async function getLoggedInUser() {
+    let userId = null;
+    let cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+        let i = 0;
+        while (cookie[i] === " ") {
+            i++;
+        }
+        cookie = cookie.slice(i);
+        if (cookie.slice(0, 8) === "user_id=") {
+            userId = cookie.slice(8);
+        }
+    }
+
+    if (!userId) return null;
+
+    const response = await fetch("/users/" + userId, {
+        headers: { "Accept": "application/json" }
+    });
+    if (!response.ok) return null;
+
+    return await response.json();
+}
+
+
 function logOut() {
     const logOutBtn = document.getElementById("logOutBtn");
     if (!logOutBtn) return;
-    logOutBtn.addEventListener("click", function () {
-        localStorage.removeItem("loggedInUser");
-        window.location.href = "login.html"
+    logOutBtn.addEventListener("click", async function () {
+         try {
+            await api.logOutUser();
+            nav();
+            window.location.href = "login.html"
+        } catch (error) {
+            console.log("logout Failed" + error)
+        }
     })
 }
+
+
 function nav() {
     let header = document.querySelector("header");
     let main = document.querySelector("main");
     let welcomeTitle = document.getElementById("welcomeMessage");
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const loggedInUser = document.cookie.includes("user_id=");
 
 
     header.innerHTML = `
@@ -73,7 +105,7 @@ async function upLoadTheseMovies(movies, user) {
 }
 
 async function uploadMovieList() {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const user = await getLoggedInUser();
     let movies;
     let myList = [];
 
@@ -81,7 +113,7 @@ async function uploadMovieList() {
         movies = await api.getMovies();
     } catch (error) {
         alert("couldn't get movies");
-        return; 
+        return;
     }
 
     for (let rev of user.reviews) {
@@ -148,7 +180,7 @@ filterForm.addEventListener("submit", async function (e) {
 
     const queryString = params.toString();
 
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const user = await getLoggedInUser()
     let allMovies;
     try {
         allMovies = await api.getMovies();
