@@ -1,4 +1,4 @@
-class movie {
+class MoviePage {
     constructor() {
         this.chosenRating = 0;
     }
@@ -97,13 +97,13 @@ class movie {
     }
     setupStars() {
         let stars = document.querySelectorAll(".star");
-        let ratingTxt = document.getElementById("rating-text")
+        let ratingText = document.getElementById("rating-text")
 
         for (let star of stars) {
             star.addEventListener("click", () => {
 
                 this.chosenRating = star.getAttribute("data-value");
-                ratingTxt.textContent = this.chosenRating;
+                ratingText.textContent = this.chosenRating;
 
                 for (let s of stars) {
                     const starValue = s.getAttribute("data-value");
@@ -172,7 +172,7 @@ class movie {
             }
 
             try {
-                let postrev = await api.postReview(user.id, review);
+                let postResult = await api.postReview(user.id, review);
                 window.location.href = "../html/discover.html";
                 alert("Du har postat en recension!!")
                 return
@@ -183,7 +183,7 @@ class movie {
 
     }
 
-    async upLoadProduct() {
+    async loadMoviePage() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
         console.log("id" + id)
@@ -205,7 +205,7 @@ class movie {
 
     }
 }
-let spec = new movie();
-spec.upLoadProduct();
+let moviePage = new MoviePage();
+moviePage.loadMoviePage();
 
-spec.nav();
+moviePage.nav();

@@ -1,16 +1,16 @@
 class API {
 
   async getMovies() {
-    let request;
+    let response;
     let movies;
     try {
-      request = await fetch("/movies", {
+      response = await fetch("/movies", {
         headers: { "Accept": "application/json" }
       });
-      if (!request.ok) {
+      if (!response.ok) {
         throw new Error("movies response är inte ok! Vincent")
       }
-      movies = await request.json();
+      movies = await response.json();
       console.log("movies:", movies)
 
     } catch (error) {
@@ -119,16 +119,16 @@ class API {
     }
   }
   async getCategories() {
-    let request;
+    let response;
     let categories;
     try {
-      request = await fetch("/movies/categories", {
+      response = await fetch("/movies/categories", {
         headers: { "Accept": "application/json" }
       });
-      if (!request.ok) {
+      if (!response.ok) {
         throw new Error("movies response är inte ok! Vincent")
       }
-      categories = await request.json();
+      categories = await response.json();
       console.log("categories:", categories)
 
     } catch (error) {
@@ -201,7 +201,7 @@ class API {
     }
   }
   async postReview(userId, review) {
-    let newReviewObj = {
+    let reviewBody = {
       id: userId,
       review: review
     }
@@ -214,7 +214,7 @@ class API {
           "Content-Type": "application/json"
         },
 
-        body: JSON.stringify(newReviewObj)
+        body: JSON.stringify(reviewBody)
       });
       if (!response.ok) {
         throw new Error("response är inte ok!")
@@ -229,7 +229,7 @@ class API {
   }
 
   async deleteReview(userId, review) {
-    let newReviewObj = {
+    let reviewBody = {
       id: userId,
       review: review
     }
@@ -242,7 +242,7 @@ class API {
           "Content-Type": "application/json"
         },
 
-        body: JSON.stringify(newReviewObj)
+        body: JSON.stringify(reviewBody)
       });
       if (!response.ok) {
         throw new Error("response är inte ok!")

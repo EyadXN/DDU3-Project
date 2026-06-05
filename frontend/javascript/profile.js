@@ -69,23 +69,23 @@ function nav() {
 
 }
 
-async function upLoadTheseMovies(movies, user) {
+async function displayUserMovies(movies, user) {
     let movieList = document.getElementById("movieList");
     movieList.innerHTML = "";
-    for (let mov of movies) {
+    for (let movieItem of movies) {
 
         let movieElement = document.createElement("div");
         movieElement.className = "movie";
 
         movieElement.innerHTML = `
             <div class="poster-container">
-                <img class="poster" src="${mov.Poster}" alt="">
-                <div class="mRev">${mov.mRev}</div>
-                <div class="oRev">${mov.rating}</div>
+                <img class="poster" src="${movieItem.Poster}" alt="">
+                <div class="mRev">${movieItem.mRev}</div>
+                <div class="oRev">${movieItem.rating}</div>
             </div>  
             <div>
-                <b>${mov.Title}</b>
-                <p>${mov.Year} - ${mov.category}</p>
+                <b>${movieItem.Title}</b>
+                <p>${movieItem.Year} - ${movieItem.category}</p>
             </div>
             <button type ="button" class="remove">Remove</button>
         `;
@@ -95,7 +95,7 @@ async function upLoadTheseMovies(movies, user) {
         movieElement.querySelector(".remove").addEventListener("click", async function (e) {
             e.preventDefault();
             try {
-                let removeRev = await api.deleteReview(user.id, mov);
+                let removeRev = await api.deleteReview(user.id, movieItem);
                 movieElement.remove();
             } catch (error) {
                 console.log("Kunde inte ta bort review", error);
@@ -104,10 +104,10 @@ async function upLoadTheseMovies(movies, user) {
     }
 }
 
-async function uploadMovieList() {
+async function loadUserMovieList() {
     const user = await getLoggedInUser();
     let movies;
-    let myList = [];
+    let reviewedMovies = [];
 
     try {
         movies = await api.getMovies();
@@ -124,13 +124,13 @@ async function uploadMovieList() {
                     mRev: rev.rating,
                     oRev: movie.rating.avgRating
                 };
-                myList.push(matchedMovie);
+                reviewedMovies.push(matchedMovie);
             }
         }
     }
 
-    if (myList.length !== 0) {
-        await upLoadTheseMovies(myList, user);
+    if (reviewedMovies.length !== 0) {
+        await displayUserMovies(reviewedMovies, user);
     }
 }
 
@@ -164,18 +164,18 @@ filterForm.addEventListener("submit", async function (e) {
     const params = new URLSearchParams();
 
     const category = filterForm.elements.category.value;
-    const releaseB = filterForm.elements.releasedbefore.value;
-    const releaseA = filterForm.elements.releasedafter.value;
+    const releasedBefore = filterForm.elements.releasedbefore.value;
+    const releasedAfter = filterForm.elements.releasedafter.value;
 
     if (category) {
         params.append("category", category);
     }
 
-    if (releaseB) {
-        params.append("releaseB", releaseB);
+    if (releasedBefore) {
+        params.append("releaseB", releasedBefore);
     }
-    if (releaseA) {
-        params.append("releaseA", releaseA);
+    if (releasedAfter) {
+        params.append("releaseA", releasedAfter);
     }
 
     const queryString = params.toString();
@@ -206,17 +206,17 @@ filterForm.addEventListener("submit", async function (e) {
         if (category && movie.category !== category) {
             continue;
         }
-        if (releaseB && Number(movie.Year) > Number(releaseB)) {
+        if (releasedBefore && Number(movie.Year) > Number(releasedBefore)) {
             continue;
         }
-        if (releaseA && Number(movie.Year) < Number(releaseA)) {
+        if (releasedAfter && Number(movie.Year) < Number(releasedAfter)) {
             continue;
         }
         filteredMovies.push(movie);
     }
-    upLoadTheseMovies(filteredMovies, user)
+    displayUserMovies(filteredMovies, user)
 })
 
-window.addEventListener("load", uploadMovieList);
+window.addEventListener("load", loadUserMovieList);
 
 nav();

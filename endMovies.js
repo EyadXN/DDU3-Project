@@ -18,11 +18,11 @@ class Movies {
             for (let user of users) {
 
 
-                for (let rev of user.reviews) {
+                for (let review of user.reviews) {
 
-                    if (rev.imdbID == movie.imdbID) {
+                    if (review.imdbID == movie.imdbID) {
 
-                        totalRating += Number(rev.rating);
+                        totalRating += Number(review.rating);
                         count++;
                     }
                 }
@@ -76,7 +76,7 @@ class Movies {
     }
 
     filterSearch(movies, releasedbefore, releasedafter, category, choices) {
-        let firstFilter = [];
+        let filteredMovies = [];
 
         for (let movie of movies) {
             if (category) {
@@ -94,20 +94,20 @@ class Movies {
                     continue;
                 }
             }
-            firstFilter.push(movie);
+            filteredMovies.push(movie);
         }
 
         if (choices === "1") {
-            firstFilter.sort(function (a, b) {
+            filteredMovies.sort(function (a, b) {
                 return Number(a.rating) - Number(b.rating);
             });
         } else if (choices === "0") {
-            firstFilter.sort(function (a, b) {
+            filteredMovies.sort(function (a, b) {
                 return Number(b.rating) - Number(a.rating);
             });
         }
 
-        return firstFilter;
+        return filteredMovies;
     }
 
 }

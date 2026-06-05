@@ -78,9 +78,9 @@ async function handler(request) {
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
 
-                let req = await request.json();
+                let bodyRequest = await request.json();
 
-                let addedReview = mov.postReview(req);
+                let addedReview = mov.postReview(bodyRequest);
                 if (addedReview) {
                     return new Response(JSON.stringify(null), options)
                 }
@@ -105,20 +105,20 @@ async function handler(request) {
                 }
             }
             if (foundUser) {
-                const randomSession = crypto.randomUUID();
+                const sessionId = crypto.randomUUID();
 
                 dataBase.sessions.push({
-                    sessionId: randomSession,
+                    sessionId: sessionId,
                     userId: foundUser.id
                 })
                 Deno.writeTextFileSync("database.json", JSON.stringify(dataBase, null, 2));
 
-                let loginHeaders = new Headers()
-                loginHeaders.set("Content-Type", "application/json");
-                loginHeaders.append("Set-Cookie", `session_id=${randomSession}; Max-Age=86400; Path=/; HttpOnly`);
-                loginHeaders.append("Set-Cookie", `user_id=${foundUser.id}; Max-Age=86400; Path=/`);
+                let responseHeaders = new Headers()
+                responseHeaders.set("Content-Type", "application/json");
+                responseHeaders.append("Set-Cookie", `session_id=${sessionId}; Max-Age=86400; Path=/; HttpOnly`);
+                responseHeaders.append("Set-Cookie", `user_id=${foundUser.id}; Max-Age=86400; Path=/`);
 
-                return new Response(JSON.stringify("Welcome!"), { headers: loginHeaders });
+                return new Response(JSON.stringify("Welcome!"), { headers: responseHeaders });
 
             }
             return new Response(JSON.stringify("Unauthorized"), {
@@ -132,24 +132,24 @@ async function handler(request) {
             let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
             const sessionId = request.headers.get("cookie") ? request.headers.get("cookie").split("session_id=")[1].split(";")[0] : null;
             if (sessionId) {
-                let sparadeSessions = [];
+                let savedSessions = [];
                 for (let session of dataBase.sessions) {
                     if (session.sessionId !== sessionId) {
-                        sparadeSessions.push(session);
+                        savedSessions.push(session);
                     }
                 }
-                dataBase.sessions = sparadeSessions;
+                dataBase.sessions = savedSessions;
                 Deno.writeTextFileSync("database.json", JSON.stringify(dataBase, null, 2));
             }
 
 
 
-            let logoutHeaders = new Headers();
-            logoutHeaders.set("Content-Type", "application/json");
-            logoutHeaders.append("Set-Cookie", "session_id=borta; Max-Age=0; Path=/; HttpOnly");
-            logoutHeaders.append("Set-Cookie", "user_id=borta; Max-Age=0; Path=/");
+            let responseHeaders  = new Headers();
+            responseHeaders.set("Content-Type", "application/json");
+            responseHeaders.append("Set-Cookie", "session_id=borta; Max-Age=0; Path=/; HttpOnly");
+            responseHeaders.append("Set-Cookie", "user_id=borta; Max-Age=0; Path=/");
 
-            return new Response(JSON.stringify("Logged out"), { headers: logoutHeaders });
+            return new Response(JSON.stringify("Logged out"), { headers: responseHeaders});
         }
 
 
@@ -182,9 +182,9 @@ async function handler(request) {
         }
         if (request.method == "POST") {
             if (request.headers.get("Content-Type") == "application/json") {
-                let req = await request.json();
-                if (use.userControl(req)) {
-                    let newUsers = use.postUser(req);
+                let bodyRequest = await request.json();
+                if (use.userControl(bodyRequest)) {
+                    let newUsers = use.postUser(bodyRequest);
                     return new Response(JSON.stringify(newUsers), options)
                 } else {
                     return new Response(JSON.stringify("Bad Request: Felaktig data"), { status: 400, headers: options.headers });
@@ -210,9 +210,9 @@ async function handler(request) {
                     return new Response(JSON.stringify(updatedUsers), options);
 
                 }
-                let req = await request.json();
+                let bodyRequest = await request.json();
 
-                let review = use.deleteReview(req.id, req.review);
+                let review = use.deleteReview(bodyRequest.id, bodyRequest.review);
 
                 if (!review) {
                     return new Response(JSON.stringify("Not Found"), { status: 404 })

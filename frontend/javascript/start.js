@@ -1,5 +1,5 @@
 
-let picPlaysimg = [
+let featuredMovies = [
     {
         name: "Dune",
         id: "0",
@@ -78,30 +78,30 @@ leftButton.addEventListener("click", previousMovie)
 let dots = document.querySelectorAll(".dot");
 dots[currentIndex].classList.add("activeDot");
 }
-renderMovie(picPlaysimg[0]);
+renderMovie(featuredMovies[0]);
 
 function nextMovie(){
     currentIndex++;
     if(currentIndex > 4){
         currentIndex = 0;
-        renderMovie(picPlaysimg[currentIndex]);
+        renderMovie(featuredMovies[currentIndex]);
     }
     else{ 
-        renderMovie(picPlaysimg[currentIndex]);
+        renderMovie(featuredMovies[currentIndex]);
     }
 }
 function previousMovie(){
     currentIndex--;
     if(currentIndex < 0){
         currentIndex = 4;
-        renderMovie(picPlaysimg[currentIndex]);
+        renderMovie(featuredMovies[currentIndex]);
     }
     else{
-        renderMovie(picPlaysimg[currentIndex])
+        renderMovie(featuredMovies[currentIndex])
     }
 }
 
-let tinyHorrorDatabase = [
+let horrorMovies = [
      {
     "Title": "Wake Up Dead Man",
     "Year": "2025",
@@ -166,7 +166,7 @@ let tinyHorrorDatabase = [
 
 function createMovieList(){
     let movieList = document.getElementById("movielist");
-    let horrorList = tinyHorrorDatabase;
+    let horrorList = horrorMovies;
 
 
    for(let horror of horrorList){

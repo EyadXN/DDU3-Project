@@ -16,44 +16,44 @@ class Users {
     postUser(req) {
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
-        let newUser = data.userList;
-        req.id = newUser.length;
-        newUser.push(req)
+        let userList = data.userList;
+        req.id = userList.length;
+        userList.push(req)
         Deno.writeTextFileSync("./database.json", JSON.stringify(data, null, 2));
-        return newUser;
+        return userList;
     }
     deleteReview(id, review) {
         let data = Deno.readTextFileSync("database.json");
         data = JSON.parse(data);
-        let bolean = false;
+        let wasDeleted = false;
 
         const targetUserId = Number(id);
 
         for (let user of data.userList) {
             if (Number(user.id) === targetUserId) {
-                const innanRadering = user.reviews.length;
-                let sparadeReviews = [];
+                const reviewCountBefore = user.reviews.length;
+                let remainingReviews = [];
 
                 for (let rev of user.reviews) {
                     if (rev.imdb !== review.imdbID) {
-                        sparadeReviews.push(rev);
+                        remainingReviews.push(rev);
                     }
                 }
 
 
 
-                if (sparadeReviews.length < innanRadering) {
-                    bolean = true;
+                if (remainingReviews.length < reviewCountBefore) {
+                    wasDeleted = true;
                 }
-                user.reviews = sparadeReviews;
+                user.reviews = remainingReviews;
             }
         }
 
-        if (bolean) {
+        if (wasDeleted) {
             Deno.writeTextFileSync("./database.json", JSON.stringify(data, null, 2));
         }
 
-        return bolean;
+        return wasDeleted;
     }
 
     findUser(id, userList) {
