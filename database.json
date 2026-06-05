@@ -976,5 +976,43 @@
       "id": 2,
       "reviews": []
     }
+  ],
+  "sessions": [
+    {
+      "sessionId": "26d52f3d-cd1d-42e9-bdd2-a6a933d18ec7",
+      "userId": 2
+    },
+    {
+      "sessionId": "ecb9d59a-9778-4101-be03-0e67b4179b69",
+      "userId": 2
+    },
+    {
+      "sessionId": "e4af5b4e-b7e8-4008-929e-aa366a9ff77e",
+      "userId": 2
+    },
+    {
+      "sessionId": "6cabca7c-48f5-476e-a606-70e8da6c008e",
+      "userId": 2
+    },
+    {
+      "sessionId": "cb63403e-97fe-4511-b609-7e4b044c26fc",
+      "userId": 2
+    },
+    {
+      "sessionId": "2d366714-c6ae-4209-8e06-414539869656",
+      "userId": 2
+    },
+    {
+      "sessionId": "7f001182-ba42-4cb6-a04d-5127be2e7a1a",
+      "userId": 2
+    },
+    {
+      "sessionId": "664512dd-360e-4112-819c-b166ee4581f7",
+      "userId": 2
+    },
+    {
+      "sessionId": "7a32cc69-e189-4e5e-8760-0b9599e4cb64",
+      "userId": 2
+    }
   ]
 }

@@ -39,23 +39,24 @@ class API {
     }
 
   }
-  
+
   async deleteAccount(userId) {
     try {
-        let response = await fetch(`/users/${userId}`, {
-            method: "DELETE",
-            headers: { 
-                "Content-Type": "application/json",
-                "Accept": "application/json" 
-            }
-        });
-        if (!response.ok) throw new Error("Gick inte att ta bort kontot");
-        return await response.json();
+      let response = await fetch(`/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      });
+      if (!response.ok) throw new Error("Gick inte att ta bort kontot");
+      return await response.json();
     } catch (error) {
-        console.log("Nätverksfel vid radering av konto:", error);
-        throw error;
+      console.log("Nätverksfel vid radering av konto:", error);
+      throw error;
     }
-}
+  }
+
   async postUser(newUser) {
     try {
 
@@ -84,6 +85,38 @@ class API {
 
     }
 
+  }
+
+  async loginUser(credentials) {
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(credentials)
+      })
+      return response.ok
+    }catch(error){
+      throw new Error("network error")
+    }
+  }
+
+  async logOutUser(){
+    try{
+      const response = await fetch("/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      if(!response.ok){
+        throw new Error("requesten gick inte igenom för logout");
+      }
+      return response.ok
+    }catch(error){
+      throw new Error("networks error for logout Request")
+    }
   }
   async getCategories() {
     let request;
@@ -215,14 +248,14 @@ class API {
         throw new Error("response är inte ok!")
       }
       if (response.status === 204) {
-            return true; 
-        }
-      else{
+        return true;
+      }
+      else {
         return false;
       }
 
 
-    }catch(error){
+    } catch (error) {
       alert("frontend Requesten gick inte igenom", error)
       return
     }

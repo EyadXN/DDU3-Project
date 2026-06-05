@@ -4,6 +4,18 @@ import { use } from "./endUsers.js"
 import { serveDir } from "jsr:@std/http/file-server"
 
 
+async function getLoggedInUserId(request) {
+    const cookieHeader = request.headers.get("cookie");
+    if (!cookieHeader) return null;
+
+    if (cookieHeader.includes("user_id=")) {
+        let parts = cookieHeader.split("user_id=");
+        let idPart = parts[1].split(";")[0];
+        return Number(idPart);
+    }
+    return null;
+}
+
 async function handler(request) {
 
 
@@ -20,32 +32,6 @@ async function handler(request) {
 
 
     if (url.pathname.startsWith(moviesUrl)) {
-
-        if (url.pathname == "/login" && request.method == "POST") {
-            let user = await request.json();
-
-            if (user.name == "Abasin" && user.password == "stone") {
-
-                let options = {
-                    headers: {
-                        "Content-Type": "application/json",
-
-        
-                        "Set-Cookie": "session_id=super-secret-value; Max-Age=86400; Path=/;"
-                    }
-                };
-
-
-                return new Response(JSON.stringify("Welcome!"), options);
-            }
-
-            return new Response(JSON.stringify("Unauthorized"), {
-                status: 401,
-                headers: { "Content-Type": "application/json" }
-            });
-        }
-
-
         if (request.method == "GET") {
 
             let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
@@ -61,13 +47,15 @@ async function handler(request) {
                     if (!url.search) {
                         return new Response(JSON.stringify(movies), options);
                     }
-                    let req = await request.json;
-                    let releaseB = url.searchParams.get("releaseB");
-                    let releaseA = url.searchParams.get("releaseA");
+
+                    let releasedbefore = url.searchParams.get("releasedbefore");
+                    let releasedafter = url.searchParams.get("releasedafter");
                     let category = url.searchParams.get("category");
+                    let choices = url.searchParams.get("choices");
 
 
-                    let filtered = mov.filterSearch(req, releaseB, releaseA, category)
+
+                    let filtered = mov.filterSearch(movies, releasedbefore, releasedafter, category, choices)
                     return new Response(JSON.stringify(filtered), options);
                 }
 
@@ -104,12 +92,72 @@ async function handler(request) {
         }
 
     }
-    if (url.pathname.startsWith(usersUrl)) {
+    if (url.pathname.startsWith(usersUrl) || url.pathname == "/login" || url.pathname == "/logout") {
+        if (url.pathname == "/login" && request.method == "POST") {
+            let credentials = await request.json();
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json"))
+
+            let foundUser = null;
+            for (let user of dataBase.userList) {
+                if (user.name === credentials.name && user.password === credentials.password) {
+                    foundUser = user;
+                    break;
+                }
+            }
+            if (foundUser) {
+                const randomSession = crypto.randomUUID();
+
+                dataBase.sessions.push({
+                    sessionId: randomSession,
+                    userId: foundUser.id
+                })
+                Deno.writeTextFileSync("database.json", JSON.stringify(dataBase, null, 2));
+
+                let loginHeaders = new Headers()
+                loginHeaders.set("Content-Type", "application/json");
+                loginHeaders.append("Set-Cookie", `session_id=${randomSession}; Max-Age=86400; Path=/; HttpOnly`);
+                loginHeaders.append("Set-Cookie", `user_id=${foundUser.id}; Max-Age=86400; Path=/`);
+
+                return new Response(JSON.stringify("Welcome!"), { headers: loginHeaders });
+
+            }
+            return new Response(JSON.stringify("Unauthorized"), {
+                status: 401,
+                headers: { "Content-Type": "application/json" }
+            });
+
+        }
+        if (url.pathname == "/logout" && request.method == "POST") {
+
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+            const sessionId = request.headers.get("cookie") ? request.headers.get("cookie").split("session_id=")[1].split(";")[0] : null;
+            if (sessionId) {
+                let sparadeSessions = [];
+                for (let session of dataBase.sessions) {
+                    if (session.sessionId !== sessionId) {
+                        sparadeSessions.push(session);
+                    }
+                }
+                dataBase.sessions = sparadeSessions;
+                Deno.writeTextFileSync("database.json", JSON.stringify(dataBase, null, 2));
+            }
+
+
+
+            let logoutHeaders = new Headers();
+            logoutHeaders.set("Content-Type", "application/json");
+            logoutHeaders.append("Set-Cookie", "session_id=borta; Max-Age=0; Path=/; HttpOnly");
+            logoutHeaders.append("Set-Cookie", "user_id=borta; Max-Age=0; Path=/");
+
+            return new Response(JSON.stringify("Logged out"), { headers: logoutHeaders });
+        }
+
 
         if (request.method == "GET") {
 
             let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
-            let movies = mov.getStartRatings(dataBase.movieList, dataBase.userList);
+
+            let loggedInId = getLoggedInUserId(request);
 
             if (request.headers.get("Accept") == "application/json") {
 
@@ -188,5 +236,4 @@ async function handler(request) {
 }
 /*
 createNewDataBase();*/
-
 Deno.serve(handler);
