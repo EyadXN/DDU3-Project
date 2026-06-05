@@ -34,14 +34,14 @@ class Users {
                 const innanRadering = user.reviews.length;
                 let sparadeReviews = [];
 
-                for(let rev of user.reviews){
-                    if(rev.imdb !== review.imdbID){
+                for (let rev of user.reviews) {
+                    if (rev.imdb !== review.imdbID) {
                         sparadeReviews.push(rev);
                     }
                 }
 
-                
-                
+
+
                 if (sparadeReviews.length < innanRadering) {
                     bolean = true;
                 }
@@ -54,6 +54,15 @@ class Users {
         }
 
         return bolean;
+    }
+
+    findUser(id, userList) {
+        for (let user of userList) {
+            if (Number(user.id) === Number(id)) {
+                return user;
+            }
+        }
+        return null;
     }
 }
 

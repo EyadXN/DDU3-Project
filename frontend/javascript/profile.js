@@ -11,7 +11,7 @@ async function getLoggedInUser() {
             userId = cookie.slice(8);
         }
     }
-
+    console.log(" det här är user ID" + userId);
     if (!userId) return null;
 
     const response = await fetch("/users/" + userId, {

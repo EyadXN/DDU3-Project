@@ -92,7 +92,7 @@ async function handler(request) {
         }
 
     }
-    if (url.pathname.startsWith(usersUrl) || url.pathname == "/login") {
+    if (url.pathname.startsWith(usersUrl) || url.pathname == "/login" || url.pathname == "/logout") {
         if (url.pathname == "/login" && request.method == "POST") {
             let credentials = await request.json();
             let dataBase = JSON.parse(Deno.readTextFileSync("database.json"))
@@ -128,6 +128,22 @@ async function handler(request) {
 
         }
         if (url.pathname == "/logout" && request.method == "POST") {
+
+            let dataBase = JSON.parse(Deno.readTextFileSync("database.json"));
+            const sessionId = request.headers.get("cookie") ? request.headers.get("cookie").split("session_id=")[1].split(";")[0] : null;
+            if (sessionId) {
+                let sparadeSessions = [];
+                for (let session of dataBase.sessions) {
+                    if (session.sessionId !== sessionId) {
+                        sparadeSessions.push(session);
+                    }
+                }
+                dataBase.sessions = sparadeSessions;
+                Deno.writeTextFileSync("database.json", JSON.stringify(dataBase, null, 2));
+            }
+
+
+
             let logoutHeaders = new Headers();
             logoutHeaders.set("Content-Type", "application/json");
             logoutHeaders.append("Set-Cookie", "session_id=borta; Max-Age=0; Path=/; HttpOnly");
